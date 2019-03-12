@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,7 @@ import com.reactivemanuel.ppmtool.services.ProjectService;
 public class ProjectController {
 	
 	@Autowired
-	private ProjectService 				projectService;
+	private ProjectService			projectService;
 	
 	@Autowired
 	private ValidationErrorService 	validationErrorService;
@@ -37,5 +39,17 @@ public class ProjectController {
 		projectService.saveOrUpdateProject(project);
 		return new ResponseEntity<Project>(project, HttpStatus.CREATED);
 	}
+	
+	@GetMapping("/all")
+	public Iterable<Project> getAllProjects(){
+		return projectService.findAllProjects();		
+	}
+	
+	@GetMapping("/{projectIdentifier}")
+	public ResponseEntity<?> getProjectByIdentifier(@PathVariable String projectIdentifier){
+		Project project = projectService.findProjectByIdentifier(projectIdentifier);
+		return new ResponseEntity<Project>(project, HttpStatus.OK); 
+	}
+	
 	
 }

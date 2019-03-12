@@ -23,4 +23,18 @@ public class ProjectService {
 
 	}
 	
+	public Project findProjectByIdentifier(String projectIdentifier) {
+		Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
+		
+		if(project==null) {
+			throw new ProjectIdException("Project Identifier '" + projectIdentifier + "' does not exists.");
+		}
+		
+		return project;
+	}
+	
+	public Iterable<Project> findAllProjects(){
+		return projectRepository.findAll();
+	}
+	
 }
