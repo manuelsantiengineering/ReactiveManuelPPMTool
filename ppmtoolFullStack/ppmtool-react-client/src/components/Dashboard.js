@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Projectitem from "./Project/Projectitem";
+import CreateProjectButton from "./Project/CreateProjectButton";
 
 class Dashboard extends Component {
   render() {
@@ -10,9 +11,8 @@ class Dashboard extends Component {
             <div className="col-md-12">
               <h1 className="display-4 text-center">Projects</h1>
               <br />
-              <a Link="ProjectForm.html" className="btn btn-lg btn-info">
-                Create a Project
-              </a>
+              <CreateProjectButton />
+              <br />
               <Projectitem />
               <br />
               <hr />
