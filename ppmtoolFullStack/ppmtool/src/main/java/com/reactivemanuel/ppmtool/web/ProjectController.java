@@ -58,10 +58,4 @@ public class ProjectController {
 		return new ResponseEntity<Project>(project, HttpStatus.OK); 
 	}
 	
-	@UpdateMapping("/{projectIdentifier}")
-	public ResponseEntity<?> deleteProjectByIdentifier(@PathVariable String projectIdentifier){
-		Project project = projectService.deleteProjectByIdentifier(projectIdentifier.toUpperCase());
-		return new ResponseEntity<Project>(project, HttpStatus.OK); 
-	}
-	
 }
