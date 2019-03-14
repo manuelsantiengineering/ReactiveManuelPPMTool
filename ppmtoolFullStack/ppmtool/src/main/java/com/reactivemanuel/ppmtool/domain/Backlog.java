@@ -23,7 +23,7 @@ public class Backlog {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;	
-	private Integer PTSequence = 0;	
+	private Integer ProjectTaskSequence = 0;	
 	private String projectIdentifier;
 	
 	// JsonIgnore breaks the infinite recursion problem
@@ -34,8 +34,6 @@ public class Backlog {
 	
 	// JsonIgnore breaks the infinite recursion problem
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="backlog")
-//	@JoinColumn(name="project_task",nullable=false)
-//	@JsonIgnore
 	private List<ProjectTask> projectTasks = new ArrayList<>();
 	
 	public Backlog() {
@@ -50,12 +48,12 @@ public class Backlog {
 		this.id = id;
 	}
 
-	public Integer getPTSequence() {
-		return PTSequence;
+	public Integer getProjectTaskSequence() {
+		return ProjectTaskSequence;
 	}
 
-	public void setPTSequence(Integer pTSequence) {
-		PTSequence = pTSequence;
+	public void setProjectTaskSequence(Integer pTSequence) {
+		ProjectTaskSequence = pTSequence;
 	}
 
 	public String getProjectIdentifier() {
