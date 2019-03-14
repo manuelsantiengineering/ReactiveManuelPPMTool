@@ -1,10 +1,46 @@
 import React, { Component } from "react";
-import { getProject } from "../../actions/projectActions";
+import { getProject, createProject } from "../../actions/projectActions";
 import Proptypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 
 class UpdateProject extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      id: "",
+      projectName: "",
+      projectIdentifier: "",
+      description: "",
+      start_date: "",
+      end_date: "",
+      errors: {}
+    };
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      id,
+      projectName,
+      projectIdentifier,
+      description,
+      start_date,
+      end_date
+    } = nextProps.project;
+
+    this.setState({
+      id,
+      projectName,
+      projectIdentifier,
+      description,
+      start_date,
+      end_date
+    });
+  }
+
   componentDidMount() {
     const { projectIdentifier } = this.props.match.params;
     this.props.getProject(projectIdentifier, this.props.history);
@@ -91,6 +127,7 @@ class UpdateProject extends Component {
 
 UpdateProject.propTypes = {
   getProject: Proptypes.func.isRequired,
+  createProject: Proptypes.func.isRequired,
   project: Proptypes.object.isRequired
 };
 
@@ -100,5 +137,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProject }
+  { getProject, createProject }
 )(UpdateProject);
