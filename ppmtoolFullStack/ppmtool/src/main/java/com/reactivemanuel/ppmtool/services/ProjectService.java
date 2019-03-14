@@ -3,19 +3,32 @@ package com.reactivemanuel.ppmtool.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.reactivemanuel.ppmtool.domain.Backlog;
 import com.reactivemanuel.ppmtool.domain.Project;
 import com.reactivemanuel.ppmtool.exceptions.ProjectIdException;
+import com.reactivemanuel.ppmtool.repositories.BacklogRepository;
 import com.reactivemanuel.ppmtool.repositories.ProjectRepository;
 
 @Service
 public class ProjectService {
 
 	@Autowired
-	private ProjectRepository projectRepository;
+	private ProjectRepository projectRepository;	
+	@Autowired
+	private BacklogRepository backlogRepository;
 	
 	public Project saveOrUpdateProject(Project project) {
 		try {
-			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			String newProjectIdentifier = project.getProjectIdentifier().toUpperCase();
+			project.setProjectIdentifier(newProjectIdentifier);
+			if(project.getId()==null) {
+				Backlog backlog = new Backlog();
+				project.setBacklog(backlog);
+				backlog.setProject(project);
+				backlog.setProjectIdentifier(newProjectIdentifier);
+			}else {
+				project.setBacklog(backlogRepository.findByProjectIdentifier(newProjectIdentifier));
+			}			
 			return projectRepository.save(project);			
 		}catch (Exception e) {
 			throw new ProjectIdException("Project Identifier '" + project.getProjectIdentifier().toUpperCase() + "'already exists.");
