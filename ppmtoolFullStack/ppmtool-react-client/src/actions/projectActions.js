@@ -18,11 +18,13 @@ export const createProject = (project, history) => async dispatch => {
 };
 
 export const getProjects = () => async dispatch => {
-  const res = await axios.get("http://localhost:8080/api/project/all");
-  dispatch({
-    type: GET_PROJECTS,
-    payload: res.data
-  });
+  try {
+    const res = await axios.get("http://localhost:8080/api/project/all");
+    dispatch({
+      type: GET_PROJECTS,
+      payload: res.data
+    });
+  } catch (err) {}
 };
 
 export const getProject = (projectIdentifier, history) => async dispatch => {
@@ -36,6 +38,7 @@ export const getProject = (projectIdentifier, history) => async dispatch => {
     });
   } catch (err) {
     history.push("/dashboard");
+    // Good place catch errors if there is no connection and display some error component
   }
 };
 
@@ -50,5 +53,6 @@ export const deleteProject = projectIdentifier => async dispatch => {
     });
   } catch (err) {
     // history.push("/dashboard");
+    // Good place catch errors if there is no connection and display some error component
   }
 };
