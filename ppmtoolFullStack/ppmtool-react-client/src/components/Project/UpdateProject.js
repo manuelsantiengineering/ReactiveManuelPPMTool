@@ -46,6 +46,23 @@ class UpdateProject extends Component {
     this.props.getProject(projectIdentifier, this.props.history);
   }
 
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    const updatedProject = {
+      id: this.state.id,
+      projectName: this.state.projectName,
+      projectIdentifier: this.state.projectIdentifier,
+      description: this.state.description,
+      start_date: this.state.start_date,
+      end_date: this.state.end_date
+    };
+    this.createProject(updatedProject, this.props.history);
+  }
+
   render() {
     return (
       <div className="register">
