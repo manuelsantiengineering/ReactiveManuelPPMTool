@@ -18,7 +18,11 @@ class App extends Component {
             <Header />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/addProject" component={AddProject} />
-            <Route exact path="/updateProject/:id" component={UpdateProject} />
+            <Route
+              exact
+              path="/updateProject/:projectIdentifier"
+              component={UpdateProject}
+            />
           </div>
         </Router>
       </Provider>
