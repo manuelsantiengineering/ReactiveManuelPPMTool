@@ -22,6 +22,9 @@ class UpdateProject extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
     const {
       id,
       projectName,
@@ -60,10 +63,11 @@ class UpdateProject extends Component {
       start_date: this.state.start_date,
       end_date: this.state.end_date
     };
-    this.createProject(updatedProject, this.props.history);
+    this.props.createProject(updatedProject, this.props.history);
   }
 
   render() {
+    const { errors } = this.state;
     return (
       <div className="register">
         <div className="container">
@@ -92,6 +96,8 @@ class UpdateProject extends Component {
                     type="text"
                     class="form-control form-control-lg"
                     placeholder="Unique Project ID"
+                    value={this.state.projectIdentifier}
+                    onChange={this.onChange}
                     disabled
                   />
                 </div>
@@ -145,11 +151,13 @@ class UpdateProject extends Component {
 UpdateProject.propTypes = {
   getProject: Proptypes.func.isRequired,
   createProject: Proptypes.func.isRequired,
-  project: Proptypes.object.isRequired
+  project: Proptypes.object.isRequired,
+  errors: Proptypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  project: state.project.project
+  project: state.project.project,
+  errors: state.errors
 });
 
 export default connect(
