@@ -14,11 +14,4 @@ public interface ProjectRepository extends CrudRepository<Project, Long>{
 
 	@Override
 	Iterable<Project> findAll();
-//
-//	@Override
-//	default Iterable<Project> findAllById(Iterable<Long> ids) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 }

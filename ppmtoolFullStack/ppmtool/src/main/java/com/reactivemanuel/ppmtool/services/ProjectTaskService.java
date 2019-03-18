@@ -1,7 +1,5 @@
 package com.reactivemanuel.ppmtool.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,4 +62,8 @@ public class ProjectTaskService {
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
 	}
 	
+	public ProjectTask findProjectTaskByProjectSequence(String projectIdentifier, String projectSequence) {
+		// Need to take the backlog Id and the project sequence to make sure there is no ambiguity.
+		return projectTaskRepository.findByProjectSequence(projectSequence);
+	}
 }

@@ -1,7 +1,5 @@
 package com.reactivemanuel.ppmtool.web;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +43,15 @@ public class BacklogController {
 	@GetMapping("/{backlog_id}")
 	public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id){		
 		return projectTaskService.findBacklogById(backlog_id);		
+	}
+	
+	@GetMapping("/{backlog_id}/{projectTask_id}")
+	public ResponseEntity<?> getProjectTask(@Valid @PathVariable String backlog_id, @PathVariable String projectTask_id){			
+//		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);	
+//		if(errorMap!=null)	{	return errorMap;	}
+		ProjectTask projectTask = projectTaskService.findProjectTaskByProjectSequence(backlog_id, projectTask_id);
+		return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);		
+
 	}
 	
 	
