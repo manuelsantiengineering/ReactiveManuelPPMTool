@@ -68,7 +68,6 @@ public class ProjectTaskService {
 		// Make sure we are searching on an existing backlog.
 		if(backlogRepository.findByProjectIdentifier(projectIdentifier)==null) {
 			throw new ProjectNotFoundException("Project Identifier '" + projectIdentifier + "' does not exists.");
-//			throw new ProjectIdException("Project Identifier '" + projectIdentifier + "' does not exists.");
 		}
 		// Make sure that our task exists
 		ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence);
@@ -82,4 +81,26 @@ public class ProjectTaskService {
 		
 		return projectTask;
 	}
+	
+	public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String projectIdentifier, String projectSequence) {
+		ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier, projectSequence);		
+		if(!updatedTask.getProjectSequence().equals(projectSequence)) {
+			throw new ProjectNotFoundException("Project Task '" + projectSequence + 
+											"' does not match URL project task '" + updatedTask.getProjectSequence() + "'.");
+		}
+		// Make sure the id matches
+		if(updatedTask.getId() != projectTask.getId()) {
+			throw new ProjectNotFoundException("Project Task Id. '" + projectTask.getId() +
+											"' does not match URL project task Id. '" + updatedTask.getId() + "'.");
+		}
+		// Replace and save with the updated task		
+		return projectTaskRepository.save(updatedTask);
+	}
+
+	public ProjectTask deleteProjectTaskByProjectSequence(String projectIdentifier, String projectSequence) {
+		ProjectTask projectTask = findProjectTaskByProjectSequence(projectIdentifier, projectSequence);
+		projectTaskRepository.delete(projectTask);
+		return projectTask;
+	}
+	
 }
