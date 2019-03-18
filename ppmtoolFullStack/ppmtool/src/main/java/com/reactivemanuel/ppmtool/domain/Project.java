@@ -16,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Project {
@@ -46,6 +47,7 @@ public class Project {
 	// owning side of the relationship. So if the project is
 	// deleted, the backlog is also deleted.
 	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="project")
+	@JsonIgnore
 	private Backlog backlog;	
 	
 	public Project() {
