@@ -61,6 +61,7 @@ public class ProjectTaskService {
 			// Exception if project does not exists (Project not found)
 			throw new ProjectIdException("Project Identifier '" + projectIdentifier + "' does not exists.");
 		}			
+		
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
 	}
 	
