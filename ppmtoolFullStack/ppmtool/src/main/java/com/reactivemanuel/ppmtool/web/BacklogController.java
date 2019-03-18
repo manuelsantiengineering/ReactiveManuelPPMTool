@@ -46,7 +46,7 @@ public class BacklogController {
 	}
 	
 	@GetMapping("/{backlog_id}/{projectTask_id}")
-	public ResponseEntity<?> getProjectTask(@Valid @PathVariable String backlog_id, @PathVariable String projectTask_id){			
+	public ResponseEntity<?> getProjectTask(@PathVariable String backlog_id, @PathVariable String projectTask_id){			
 //		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);	
 //		if(errorMap!=null)	{	return errorMap;	}
 		ProjectTask projectTask = projectTaskService.findProjectTaskByProjectSequence(backlog_id, projectTask_id);

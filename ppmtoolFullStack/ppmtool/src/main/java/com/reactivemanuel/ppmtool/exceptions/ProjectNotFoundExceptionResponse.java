@@ -1,20 +1,19 @@
 package com.reactivemanuel.ppmtool.exceptions;
 
 public class ProjectNotFoundExceptionResponse {
-
-	public String ProjectNotFound;
+	public String projectNotFound;
 
 	public ProjectNotFoundExceptionResponse(String projectNotFound) {
 		super();
-		ProjectNotFound = projectNotFound;
+		this.projectNotFound = projectNotFound;
 	}
 
 	public String getProjectNotFound() {
-		return ProjectNotFound;
+		return this.projectNotFound;
 	}
 
 	public void setProjectNotFound(String projectNotFound) {
-		ProjectNotFound = projectNotFound;
+		this.projectNotFound = projectNotFound;
 	}	
 	
 }

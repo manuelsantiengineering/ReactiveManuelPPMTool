@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.reactivemanuel.ppmtool.domain.Backlog;
 import com.reactivemanuel.ppmtool.domain.ProjectTask;
 import com.reactivemanuel.ppmtool.exceptions.ProjectIdException;
+import com.reactivemanuel.ppmtool.exceptions.ProjectNotFoundException;
 import com.reactivemanuel.ppmtool.repositories.BacklogRepository;
 import com.reactivemanuel.ppmtool.repositories.ProjectRepository;
 import com.reactivemanuel.ppmtool.repositories.ProjectTaskRepository;
@@ -57,13 +58,28 @@ public class ProjectTaskService {
 	public Iterable<ProjectTask> findBacklogById(String projectIdentifier) {
 		if(projectRepository.findByProjectIdentifier(projectIdentifier)==null) {
 			// Exception if project does not exists (Project not found)
-			throw new ProjectIdException("Project Identifier '" + projectIdentifier + "' does not exists.");
+			throw new ProjectNotFoundException("Project Identifier '" + projectIdentifier + "' does not exists.");
 		}			
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
 	}
 	
 	public ProjectTask findProjectTaskByProjectSequence(String projectIdentifier, String projectSequence) {
 		// Need to take the backlog Id and the project sequence to make sure there is no ambiguity.
-		return projectTaskRepository.findByProjectSequence(projectSequence);
+		// Make sure we are searching on an existing backlog.
+		if(backlogRepository.findByProjectIdentifier(projectIdentifier)==null) {
+			throw new ProjectNotFoundException("Project Identifier '" + projectIdentifier + "' does not exists.");
+//			throw new ProjectIdException("Project Identifier '" + projectIdentifier + "' does not exists.");
+		}
+		// Make sure that our task exists
+		ProjectTask projectTask = projectTaskRepository.findByProjectSequence(projectSequence);
+		if(projectTask==null) {
+			throw new ProjectNotFoundException("Project Task '" + projectSequence + "' does not exists.");
+		}
+		// Make sure that the backlog project id in the path corresponds to the right project
+		if(!projectTask.getProjectIdentifier().equals(projectIdentifier)) {
+			throw new ProjectNotFoundException("Project Task '" + projectSequence + "' does not exists in project '" + projectIdentifier + "'.");
+		}
+		
+		return projectTask;
 	}
 }
