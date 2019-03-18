@@ -22,13 +22,14 @@ class Projectitem extends Component {
               <h3>{project.projectName}</h3>
               <p>{project.description}</p>
             </div>
+
             <div className="col-md-4 d-none d-lg-block">
               <ul className="list-group">
-                <a href="#">
+                <Link to={`/projectBoard/${project.projectIdentifier}`}>
                   <li className="list-group-item update">
                     <i className="fa fa-edit pr-1">Project Board</i>
                   </li>
-                </a>
+                </Link>
 
                 <Link to={`/updateProject/${project.projectIdentifier}`}>
                   <li className="list-group-item board">
