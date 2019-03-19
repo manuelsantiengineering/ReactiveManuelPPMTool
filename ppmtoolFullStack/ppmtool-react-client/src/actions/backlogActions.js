@@ -40,3 +40,21 @@ export const getBacklog = backlog_id => async dispatch => {
     });
   }
 };
+
+export const getProjectTask = (
+  backlog_id,
+  proejectTaskIdentifier,
+  history
+) => async dispatch => {
+  try {
+    const res = await axios.get(
+      `/api/backlog/${backlog_id}/${proejectTaskIdentifier}`
+    );
+    dispatch({
+      type: GET_PROJECT_TASK,
+      payload: res.data
+    });
+  } catch (err) {
+    history.push("/dashboard");
+  }
+};

@@ -4,12 +4,10 @@ import Backlog from "./Backlog";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getBacklog } from "../../actions/backlogActions";
-import { DH_NOT_SUITABLE_GENERATOR } from "constants";
 
 class ProjectBoard extends Component {
-  constructor(props) {
-    super(props);
-    // const { projectIdentifier } = this.props.match.params;
+  constructor() {
+    super();
     this.state = {
       errors: {}
     };
