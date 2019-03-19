@@ -21,17 +21,17 @@ export default function(state = initialState, action) {
         ...state,
         project_task: action.payload
       };
-    case DELETE_PROJECT_TASK:
-      return {
-        ...state
-      };
     // case DELETE_PROJECT_TASK:
     //   return {
-    //     ...state,
-    //     project_task: state.projects.filter(
-    //       project => project.projectIdentifier !== action.payload
-    //     )
+    //     ...state
     //   };
+    case DELETE_PROJECT_TASK:
+      return {
+        ...state,
+        project_tasks: state.project_tasks.filter(
+          project_task => project_task.projectSequence !== action.payload
+        )
+      };
     default:
       return state;
   }

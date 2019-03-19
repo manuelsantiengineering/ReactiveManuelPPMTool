@@ -45,7 +45,7 @@ export const deleteProject = projectIdentifier => async dispatch => {
   try {
     if (
       window.confirm(
-        "Are you sure? This will delete the project and all the date related to it."
+        `Are you sure?\nThis will delete the project ${projectIdentifier} and all the data related to it.\nThis action cannot be undone.`
       )
     ) {
       // const res = await axios.delete(`/api/project/${projectIdentifier}`);

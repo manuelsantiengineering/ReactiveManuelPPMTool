@@ -7,13 +7,13 @@ import {
 } from "./types";
 
 export const addProjectTask = (
-  backlog_id,
+  projectIdentifier,
   project_task,
   history
 ) => async dispatch => {
   try {
-    await axios.post(`/api/backlog/${backlog_id}`, project_task);
-    history.push(`/projectBoard/${backlog_id}`);
+    await axios.post(`/api/backlog/${projectIdentifier}`, project_task);
+    history.push(`/projectBoard/${projectIdentifier}`);
     dispatch({
       type: GET_ERRORS,
       payload: {}
@@ -26,9 +26,9 @@ export const addProjectTask = (
   }
 };
 
-export const getBacklog = backlog_id => async dispatch => {
+export const getBacklog = projectIdentifier => async dispatch => {
   try {
-    const res = await axios.get(`/api/backlog/${backlog_id}`);
+    const res = await axios.get(`/api/backlog/${projectIdentifier}`);
     dispatch({
       type: GET_BACKLOG,
       payload: res.data
@@ -42,13 +42,13 @@ export const getBacklog = backlog_id => async dispatch => {
 };
 
 export const getProjectTask = (
-  backlog_id,
-  proejectTaskIdentifier,
+  projectIdentifier,
+  projectTaskSequence,
   history
 ) => async dispatch => {
   try {
     const res = await axios.get(
-      `/api/backlog/${backlog_id}/${proejectTaskIdentifier}`
+      `/api/backlog/${projectIdentifier}/${projectTaskSequence}`
     );
     dispatch({
       type: GET_PROJECT_TASK,
@@ -56,5 +56,54 @@ export const getProjectTask = (
     });
   } catch (err) {
     history.push("/dashboard");
+  }
+};
+
+export const updateProjectTask = (
+  projectIdentifier,
+  projectTaskSequence,
+  updateProjectTask,
+  history
+) => async dispatch => {
+  try {
+    await axios.patch(
+      `/api/backlog/${projectIdentifier}/${projectTaskSequence}`,
+      updateProjectTask
+    );
+    history.push(`/projectBoard/${projectIdentifier}`);
+    dispatch({
+      type: GET_ERRORS,
+      payload: {}
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
+  }
+};
+
+export const deleteProjectTask = (
+  projectIdentifier,
+  projectTaskSequence
+) => async dispatch => {
+  try {
+    if (
+      window.confirm(
+        `Are you sure?\nThis will delete the project task ${projectTaskSequence} and all the data related to it.\nThis action cannot be undone.`
+      )
+    ) {
+      // const res = await axios.delete(`/api/project/${projectIdentifier}`);
+      await axios.delete(
+        `/api/backlog/${projectIdentifier}/${projectTaskSequence}`
+      );
+      dispatch({
+        type: DELETE_PROJECT_TASK,
+        payload: projectTaskSequence
+      });
+    }
+  } catch (err) {
+    // history.push("/dashboard");
+    // Good place catch errors if there is no connection and display some error component
   }
 };
