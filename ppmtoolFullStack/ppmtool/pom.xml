@@ -11,10 +11,13 @@
 	<groupId>com.reactivemanuel</groupId>
 	<artifactId>ppmtool</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
 	<name>ppmtool</name>
 	<description>Demo project for Spring Boot and React</description>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -33,11 +36,13 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- <dependency>
+		
+		<!-- H2 Database -->		
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
-		</dependency> -->
+		</dependency> 
 		
 		<!-- Hibernate -->
 		<!-- <dependency>
@@ -50,6 +55,7 @@
 		<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
         </dependency>
 		
 		<!-- C3PO -->
