@@ -21,10 +21,6 @@ export default function(state = initialState, action) {
         ...state,
         project_task: action.payload
       };
-    // case DELETE_PROJECT_TASK:
-    //   return {
-    //     ...state
-    //   };
     case DELETE_PROJECT_TASK:
       return {
         ...state,
