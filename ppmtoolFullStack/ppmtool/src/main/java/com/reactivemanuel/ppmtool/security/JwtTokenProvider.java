@@ -2,6 +2,7 @@ package com.reactivemanuel.ppmtool.security;
 
 
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import com.reactivemanuel.ppmtool.domain.User;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class JwtTokenProvider {
 
 	// Generate the token
