@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reactivemanuel.ppmtool.domain.User;
+import com.reactivemanuel.ppmtool.security.JwtTokenProvider;
 import com.reactivemanuel.ppmtool.services.UserService;
 import com.reactivemanuel.ppmtool.services.ValidationErrorService;
 import com.reactivemanuel.ppmtool.validator.UserValidator;
@@ -30,6 +31,9 @@ public class UserController {
 	
 	@Autowired
 	private UserValidator userValidator;
+	
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
 	
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result){
