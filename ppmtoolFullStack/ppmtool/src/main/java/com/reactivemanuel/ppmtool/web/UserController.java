@@ -32,17 +32,13 @@ import static com.reactivemanuel.ppmtool.security.SecurityConstants.TOKEN_PREFIX
 public class UserController {
 
 	@Autowired
-	private UserService userService;
-	
+	private UserService userService;	
 	@Autowired
-	private ValidationErrorService 	validationErrorService;
-	
+	private ValidationErrorService 	validationErrorService;	
 	@Autowired
-	private UserValidator userValidator;
-	
+	private UserValidator userValidator;	
 	@Autowired
-	private JwtTokenProvider tokenProvider;
-	
+	private JwtTokenProvider tokenProvider;	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	

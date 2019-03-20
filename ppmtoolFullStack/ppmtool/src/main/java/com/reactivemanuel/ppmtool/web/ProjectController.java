@@ -1,5 +1,7 @@
 package com.reactivemanuel.ppmtool.web;
 
+import java.security.Principal;
+
 //import java.util.HashMap;
 //import java.util.List;
 //import java.util.Map;
@@ -30,33 +32,36 @@ import com.reactivemanuel.ppmtool.services.ProjectService;
 public class ProjectController {
 	
 	@Autowired
-	private ProjectService			projectService;
-	
+	private ProjectService			projectService;	
 	@Autowired
 	private ValidationErrorService 	validationErrorService;
 
 	@PostMapping("")
-	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
+	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, 
+											BindingResult result, Principal principal){
+		
 		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);	
 		if(errorMap!=null)	{	return errorMap;	}
-		projectService.saveOrUpdateProject(project);
+		
+		projectService.saveOrUpdateProject(project, principal.getName());
 		return new ResponseEntity<Project>(project, HttpStatus.CREATED);
+		
 	}
 	
 	@GetMapping("/all")
-	public Iterable<Project> getAllProjects(){
-		return projectService.findAllProjects();		
+	public Iterable<Project> getAllProjects(Principal principal){
+		return projectService.findAllProjects(principal.getName());		
 	}
 	
 	@GetMapping("/{projectIdentifier}")
-	public ResponseEntity<?> getProjectByIdentifier(@PathVariable String projectIdentifier){
-		Project project = projectService.findProjectByIdentifier(projectIdentifier.toUpperCase());
+	public ResponseEntity<?> getProjectByIdentifier(@PathVariable String projectIdentifier, Principal principal){
+		Project project = projectService.findProjectByIdentifier(projectIdentifier.toUpperCase(), principal.getName());
 		return new ResponseEntity<Project>(project, HttpStatus.OK); 
 	}
 	
 	@DeleteMapping("/{projectIdentifier}")
-	public ResponseEntity<?> deleteProjectByIdentifier(@PathVariable String projectIdentifier){
-		Project project = projectService.deleteProjectByIdentifier(projectIdentifier.toUpperCase());
+	public ResponseEntity<?> deleteProjectByIdentifier(@PathVariable String projectIdentifier, Principal principal){
+		Project project = projectService.deleteProjectByIdentifier(projectIdentifier.toUpperCase(), principal.getName());
 		return new ResponseEntity<Project>(project, HttpStatus.OK); 
 	}
 	

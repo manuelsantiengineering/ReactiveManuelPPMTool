@@ -1,13 +1,18 @@
 package com.reactivemanuel.ppmtool.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
@@ -40,6 +45,8 @@ public class User implements UserDetails{
 	private Date updated_At;
 
 	//OneToMany with the project
+	@OneToMany(mappedBy="user",cascade=CascadeType.REFRESH,fetch=FetchType.EAGER,orphanRemoval=true)
+	private List<Project> projects = new ArrayList<>();
 	
 	public User() {
 		super();
@@ -99,6 +106,14 @@ public class User implements UserDetails{
 
 	public void setUpdated_At(Date updated_At) {
 		this.updated_At = updated_At;
+	}	
+	
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 
 	@PrePersist
