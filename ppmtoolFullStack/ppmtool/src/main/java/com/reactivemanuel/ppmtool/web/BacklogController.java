@@ -51,10 +51,14 @@ public class BacklogController {
 	}
 	
 	@GetMapping("/{backlog_id}/{projectTask_id}")
-	public ResponseEntity<?> getProjectTask(@PathVariable String backlog_id, @PathVariable String projectTask_id){			
+	public ResponseEntity<?> getProjectTask(@PathVariable String backlog_id, @PathVariable String projectTask_id,
+											Principal principal){	
+		
 //		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);	
 //		if(errorMap!=null)	{	return errorMap;	}
-		ProjectTask projectTask = projectTaskService.findProjectTaskByProjectSequence(backlog_id, projectTask_id);
+		ProjectTask projectTask = projectTaskService.findProjectTaskByProjectSequence(backlog_id, projectTask_id,
+																				principal.getName());
+		
 		return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);		
 
 	}
@@ -62,18 +66,23 @@ public class BacklogController {
 	@PatchMapping("/{backlog_id}/{projectTask_id}")
 	public ResponseEntity<?> updateProjectTask(@Valid @RequestBody ProjectTask projectTask, 
 											BindingResult result, @PathVariable String backlog_id, 
-											@PathVariable String projectTask_id){	
+											@PathVariable String projectTask_id, Principal principal){	
 		
 		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);	
 		if(errorMap!=null)	{	return errorMap;	}
-		ProjectTask updatedProjectTask = projectTaskService.updateByProjectSequence(projectTask, backlog_id, projectTask_id);
+		ProjectTask updatedProjectTask = projectTaskService.updateByProjectSequence(projectTask, backlog_id, projectTask_id,
+																				principal.getName());
 		return new ResponseEntity<ProjectTask>(updatedProjectTask, HttpStatus.OK);		
 
 	}
 	
 	@DeleteMapping("/{backlog_id}/{projectTask_id}")
-	public ResponseEntity<?> deleteProjectTask(@PathVariable String backlog_id, @PathVariable String projectTask_id){	
-		ProjectTask projectTask = projectTaskService.deleteProjectTaskByProjectSequence(backlog_id.toUpperCase(), projectTask_id.toUpperCase());
+	public ResponseEntity<?> deleteProjectTask(@PathVariable String backlog_id, @PathVariable String projectTask_id,
+											Principal principal){
+		
+		ProjectTask projectTask = projectTaskService.deleteProjectTaskByProjectSequence(backlog_id.toUpperCase(), 
+																				projectTask_id.toUpperCase(),
+																				principal.getName());
 		return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK); 
 	}
 	
