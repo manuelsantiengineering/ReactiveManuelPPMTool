@@ -28,7 +28,6 @@ public class ProjectTaskService {
 	
 	
 	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, String username) {		
-
 		// We want all the project tasks to be added to a specific project, project not null
 		// We need a backlog object in order to have a task.
 		// We want to set an initial priority level.
@@ -38,9 +37,8 @@ public class ProjectTaskService {
 		
 		Integer backlogProjectTaskSequence = backlog.getProjectTaskSequence();
 		backlogProjectTaskSequence++;
-		backlog.setProjectTaskSequence(backlogProjectTaskSequence);
-		
-		// Add sequence to project task
+		backlog.setProjectTaskSequence(backlogProjectTaskSequence);		
+
 		projectTask.setProjectSequence(projectIdentifier+"-"+backlogProjectTaskSequence);
 		projectTask.setProjectIdentifier(projectIdentifier);
 		
@@ -54,11 +52,8 @@ public class ProjectTaskService {
 	}
 
 
-	public Iterable<ProjectTask> findBacklogById(String projectIdentifier) {
-		if(projectRepository.findByProjectIdentifier(projectIdentifier)==null) {
-			// Exception if project does not exists (Project not found)
-			throw new ProjectNotFoundException("Project Identifier '" + projectIdentifier + "' does not exists.");
-		}			
+	public Iterable<ProjectTask> findBacklogById(String projectIdentifier, String username) {		
+		projectService.findProjectByIdentifier(projectIdentifier, username);		
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
 	}
 	
