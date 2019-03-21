@@ -36,10 +36,6 @@ export const login = LoginRequest => async dispatch => {
       type: SET_CURRENT_USER,
       payload: decoded
     });
-    dispatch({
-      type: GET_ERRORS,
-      payload: {}
-    });
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
