@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.reactivemanuel.ppmtool.domain.User;
+import com.reactivemanuel.ppmtool.exceptions.ProjectNotFoundException;
 import com.reactivemanuel.ppmtool.exceptions.UsernameAlreadyExistsException;
 import com.reactivemanuel.ppmtool.repositories.UserRepository;
 
@@ -19,7 +20,7 @@ public class UserService {
 	
 	
 	public User saveUser(User newUser) {
-		try {
+		try {			
 			// Make sure that password and confirmPassword match
 			newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 			newUser.setConfirmPassword("");
