@@ -1,5 +1,7 @@
 package com.reactivemanuel.ppmtool.web;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +36,12 @@ public class BacklogController {
 		
 	@PostMapping("/{backlog_id}")
 	public ResponseEntity<?> createNewProjectTask(@Valid @RequestBody ProjectTask projectTask, 
-											BindingResult result, @PathVariable String backlog_id){
+											BindingResult result, @PathVariable String backlog_id, 
+											Principal principal){
 		
 		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);	
 		if(errorMap!=null)	{	return errorMap;	}
-		ProjectTask projectTaskReturn = projectTaskService.addProjectTask(backlog_id, projectTask);
+		ProjectTask projectTaskReturn = projectTaskService.addProjectTask(backlog_id, projectTask, principal.getName());
 		return new ResponseEntity<ProjectTask>(projectTaskReturn, HttpStatus.CREATED);		
 	}
 	

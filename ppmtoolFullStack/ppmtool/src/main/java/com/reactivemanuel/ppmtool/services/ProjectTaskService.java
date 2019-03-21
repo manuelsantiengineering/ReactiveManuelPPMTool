@@ -23,35 +23,34 @@ public class ProjectTaskService {
 	@Autowired
 	private ProjectTaskRepository projectTaskRepository;
 	
+	@Autowired
+	private ProjectService projectService;
 	
-	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {		
-		// Exception if project does not exists (Project not found)
-		try {
-			// We want all the project tasks to be added to a specific project, project not null
-			// We need a backlog object in order to have a task.
-			// We want to set an initial priority level.
-			// We want to set an initial status when it is null.
-			Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
-			projectTask.setBacklog(backlog);
-			
-			Integer backlogProjectTaskSequence = backlog.getProjectTaskSequence();
-			backlogProjectTaskSequence++;
-			backlog.setProjectTaskSequence(backlogProjectTaskSequence);
-			
-			// Add sequence to project task
-			projectTask.setProjectSequence(projectIdentifier+"-"+backlogProjectTaskSequence);
-			projectTask.setProjectIdentifier(projectIdentifier);
-			if(projectTask.getPriority()==null || projectTask.getPriority()==0) {
-				projectTask.setPriority(3);
-			}
-			if(projectTask.getStatus()==null || projectTask.getStatus()=="") {
-				projectTask.setStatus("TO_DO");
-			}
-			return projectTaskRepository.save(projectTask);		
-			
-		}catch (Exception e) {
-			throw new ProjectIdException("Project Identifier '" + projectIdentifier + "' not found.");			
+	
+	public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask, String username) {		
+
+		// We want all the project tasks to be added to a specific project, project not null
+		// We need a backlog object in order to have a task.
+		// We want to set an initial priority level.
+		// We want to set an initial status when it is null.			
+		Backlog backlog = projectService.findProjectByIdentifier(projectIdentifier, username).getBacklog();
+		projectTask.setBacklog(backlog);
+		
+		Integer backlogProjectTaskSequence = backlog.getProjectTaskSequence();
+		backlogProjectTaskSequence++;
+		backlog.setProjectTaskSequence(backlogProjectTaskSequence);
+		
+		// Add sequence to project task
+		projectTask.setProjectSequence(projectIdentifier+"-"+backlogProjectTaskSequence);
+		projectTask.setProjectIdentifier(projectIdentifier);
+		
+		if(projectTask.getPriority()==null || projectTask.getPriority()==0) {
+			projectTask.setPriority(3);
 		}
+		if(projectTask.getStatus()==null || projectTask.getStatus()=="") {
+			projectTask.setStatus("TO_DO");
+		}
+		return projectTaskRepository.save(projectTask);		
 	}
 
 
