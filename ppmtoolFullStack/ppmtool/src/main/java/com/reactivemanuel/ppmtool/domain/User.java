@@ -22,38 +22,37 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User implements UserDetails{
-	@Id
+	 @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    private Long id;
 	
 	@Email(message= "Username needs to be an email.")	
 	@NotBlank(message="Username is required.")
-	@Column(updatable=false, unique=true)
+	@Column(unique=true,updatable=false)
 	private String username;
 	@NotBlank(message="Please enter your first name.")
 	private String firstName;
 	@NotBlank(message="Password is required.")
 	private String password;
 	@Transient
-	@NotBlank(message="Confirmation password is required.")
+//	@NotBlank(message="Confirmation password is required.")
 	private String confirmPassword;
 	
-	@JsonFormat(pattern="yyyy-mm-dd")
+//	@JsonFormat(pattern="yyyy-mm-dd")
 	private Date created_At;
-	@JsonFormat(pattern="yyyy-mm-dd")
+//	@JsonFormat(pattern="yyyy-mm-dd")
 	private Date updated_At;
 
 	//OneToMany with the project
-	@OneToMany(mappedBy="user",cascade=CascadeType.REFRESH,fetch=FetchType.EAGER,orphanRemoval=true)
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
 	private List<Project> projects = new ArrayList<>();
 	
 	public User() {
-		super();
 	}
 
 	public Long getId() {
@@ -96,21 +95,21 @@ public class User implements UserDetails{
 		this.confirmPassword = confirmPassword;
 	}
 
-	public Date getCreated_At() {
-		return created_At;
-	}
+    public Date getCreated_At() {
+        return created_At;
+    }
 
-	public void setCreated_At(Date created_At) {
-		this.created_At = created_At;
-	}
+    public void setCreated_At(Date created_At) {
+        this.created_At = created_At;
+    }
 
-	public Date getUpdated_At() {
-		return updated_At;
-	}
+    public Date getUpdated_At() {
+        return updated_At;
+    }
 
-	public void setUpdated_At(Date updated_At) {
-		this.updated_At = updated_At;
-	}	
+    public void setUpdate_At(Date updated_At) {
+        this.updated_At = updated_At;
+    }
 	
 	public List<Project> getProjects() {
 		return projects;
@@ -135,34 +134,34 @@ public class User implements UserDetails{
 	 UserDetails interface methods
 	 */	
 
-	@Override
-	@JsonIgnore
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
-	}
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
-	@Override
-	@JsonIgnore
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	@JsonIgnore
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    @JsonIgnore
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	@JsonIgnore
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    @Override
+    @JsonIgnore
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-	@Override
-	@JsonIgnore
-	public boolean isEnabled() {
-		return true;
-	}	
+    @Override
+    @JsonIgnore
+    public boolean isEnabled() {
+        return true;
+    }
 	
 }

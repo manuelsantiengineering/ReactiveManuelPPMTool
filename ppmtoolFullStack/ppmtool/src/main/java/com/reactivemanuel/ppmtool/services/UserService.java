@@ -21,11 +21,12 @@ public class UserService {
 	
 	public User saveUser(User newUser) {
 		try {			
+			newUser.setUsername(newUser.getUsername().toLowerCase());
 			// Make sure that password and confirmPassword match
 			newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 			newUser.setConfirmPassword("");
-			return userRepository.save(newUser);				
-			// Do not persist or show the confirmPassword
+
+			return userRepository.save(newUser);		
 			
 		}catch (Exception e) {
 			// Username has to be unique

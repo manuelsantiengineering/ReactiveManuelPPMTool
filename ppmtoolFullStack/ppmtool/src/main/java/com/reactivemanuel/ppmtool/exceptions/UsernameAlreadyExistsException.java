@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class UsernameAlreadyExistsException extends RuntimeException{
 
-	private static final long serialVersionUID = -1618331015840763514L;
+//	private static final long serialVersionUID = -1618331015840763514L;
 
 	public UsernameAlreadyExistsException(String message) {
 		super(message);
