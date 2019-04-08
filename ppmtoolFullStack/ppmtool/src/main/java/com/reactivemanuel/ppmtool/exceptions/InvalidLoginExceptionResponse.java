@@ -1,10 +1,10 @@
 package com.reactivemanuel.ppmtool.exceptions;
 
-public class InvalidLoginResponse {
+public class InvalidLoginExceptionResponse {
 	private String username;
 	private String password;
 
-	public InvalidLoginResponse() {
+	public InvalidLoginExceptionResponse() {
 		super();
 		this.username = "Invalid Username";
 		this.password = "Invalid Password";

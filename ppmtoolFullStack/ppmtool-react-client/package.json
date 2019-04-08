@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@githubprimer/octicons-react": "^8.5.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
@@ -35,5 +36,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "https://rmfstreet.herokuapp.com"
+  "proxy": "http://ppmtool.us-east-1.elasticbeanstalk.com/"
 }

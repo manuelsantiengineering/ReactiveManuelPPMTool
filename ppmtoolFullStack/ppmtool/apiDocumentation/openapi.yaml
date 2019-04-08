@@ -1,0 +1,661 @@
+openapi: 3.0.1
+info:
+  title: Swagger - RMF Street Documentation
+  description: This is the API documentation for the Project Portfolio Management
+    Tool prepared by Manuel E. Santiago
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about the tool
+  url: https://rmfstreet.herokuapp.com/
+servers:
+- url: https://rmfstreet.herokuapp.com/
+tags:
+- name: Project Portfolio Management Tool (PPM Tool)
+  description: Everything about Manuel's First Project Portfolio Management Tool (PPM
+    Tool).
+  # externalDocs:
+  #   description: Find out about the tool
+  #   url: https://rmfstreet.herokuapp.com/
+paths:
+  /api/users/register:
+    post:
+      tags:
+      - User
+      summary: Register a new user.
+      description: This endpoint uses a post request to add a new user. The user name has to be a valid email.
+      operationId: registerUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserRegistration'
+      responses:
+        201:
+          description: Successful user registration operation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          $ref: '#/components/responses/UserRegistrationError'
+        5XX:
+          description: Unexpected error.
+          
+  /api/users/login:
+    post:
+      tags:
+      - User
+      summary: Login existing user.
+      description: This endpoint uses a post request to login an existing user.
+      operationId: authenticateUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserLogin'
+      responses:
+        200:
+          description: >- 
+            Successful login operation. 
+            Returns a Json Web Token (JWT), basic authentication token.
+          content: {}
+        400:
+          $ref: '#/components/responses/UnauthorizedError'
+
+          # content: {}
+        5XX:
+          description: Unexpected error.
+  
+  /api/project/:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project
+      summary: Create a new project.
+      description: This endpoint uses a post request to create a new project.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+        The request body must include the new project information.
+        Returns a json with the information of the new project.
+      operationId: createNewProject
+      requestBody:
+        $ref: '#/components/requestBodies/CreateNewProject'
+      responses:
+        201:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          description: Missing one of the required parameters or trying to use an
+            existing Project Identifier.
+          content: {}
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+          
+        5XX:
+          description: Unexpected error.
+          
+  /api/project/all:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project
+      summary: Get a list of the user projects.
+      description: This endpoint uses a get request to get all of the user projects.
+        Returns a list with all of the projects created by the logged user.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+      operationId: getAllProjects
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+                  
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        5XX:
+          description: Unexpected error.
+  
+  /api/project/{projectIdentifier}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project
+      summary: Find project by Project Identifier
+      description: This endpoint uses a get request to get the project with
+        the specified project identifier. 
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+      operationId: getProjectByIdentifier
+      parameters:
+      - name: projectIdentifier
+        in: path
+        description: The Project Identifier of an existing project.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          description: Invalid Project Identifier
+          content: {}
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        5XX:
+          description: Unexpected error.
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project
+      summary: Delete project order by Project Identifier
+      description: This endpoint uses a delete request to delete the project with
+        the specified project identifier.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+      operationId: deleteProjectByIdentifier
+      parameters:
+      - name: projectIdentifier
+        in: path
+        description: The Project Identifier of an existing project. 
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          description: Invalid Project Identifier
+          content: {}
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        5XX:
+          description: Unexpected error.
+          
+          
+          
+          
+  /api/backlog/{projectIdentifier}:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project Task
+      summary: Create a new project task for the project with project identifier
+      description: This endpoint uses a post request to create a new project task inside
+        the project with a specific project identifier.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+        The request body must include the new project task information.
+        Returns a json with the information of the new project task.
+      operationId: createNewProjectTask
+      parameters:
+      - name: projectIdentifier
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be posted inside of the project with the specified id.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/CreateNewProjectTask'
+      responses:
+        201:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        400:
+          $ref: '#/components/responses/ProjectIdentifierDoesNotExists'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+          
+        5XX:
+          description: Unexpected error.
+
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project Task
+      summary: Get a list of the project tasks for the project with project identifier
+      description: This endpoint uses a get request to get all of the project tasks inside
+        the project with a specific project identifier.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+      operationId: getProjectBacklog
+      parameters:
+      - name: projectIdentifier
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be deleted from the project with the specified id.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+        400:
+          $ref: '#/components/responses/ProjectIdentifierDoesNotExists'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        5XX:
+          description: Unexpected error.
+          
+  /api/project/{projectIdentifier}/{projectTask_id}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project Task
+      summary: Get a specific project task for the project with project identifier
+      description: This endpoint uses a get request to get a specific project task with
+        the project task id inside of the project with a specific project identifier.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+      operationId: getProjectTask
+      parameters:
+      - name: projectIdentifier
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be posted inside of the project with the specified id.
+        required: true
+        schema:
+          type: string
+      - name: projectTask_id
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be posted inside of the project with the specified id.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTask'
+        400:
+          $ref: '#/components/responses/ProjectIdentifierDoesNotExists'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        5XX:
+          description: Unexpected error.
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project Task
+      summary: Updates a specific project task for the project with project identifier
+      description: This endpoint uses a patch request to update a specific project task with
+        the project task id inside of the project with a specific project identifier.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+      operationId: updateProjectTask
+      parameters:
+      - name: projectIdentifier
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be posted inside of the project with the specified id.
+        required: true
+        schema:
+          type: string
+      - name: projectTask_id
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be posted inside of the project with the specified id.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/CreateNewProjectTask'
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTask'
+        400:
+          $ref: '#/components/responses/ProjectIdentifierDoesNotExists'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        5XX:
+          description: Unexpected error.
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+      - Project Task
+      summary: Deletes a specific project task for the project with project identifier
+      description: This endpoint uses a delete request to remove a specific project task with
+        the project task id inside of the project with a specific project identifier.
+        The user has to be logged in and pass a JWT in the header in order to make the request.
+      operationId: deleteProjectTask
+      parameters:
+      - name: projectIdentifier
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be posted inside of the project with the specified id.
+        required: true
+        schema:
+          type: string
+      - name: projectTask_id
+        in: path
+        description: The Project Identifier of an existing project. The Project Task will be posted inside of the project with the specified id.
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTask'
+        400:
+          $ref: '#/components/responses/ProjectIdentifierDoesNotExists'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        5XX:
+          description: Unexpected error.
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+components:
+  securitySchemes:
+      bearerAuth:            # arbitrary name for the security scheme
+        type: http
+        scheme: bearer
+        bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+  schemas:
+    
+    Project:
+      required:
+      - projectIdentifier
+      - projectName
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        projectName:
+          type: string
+        projectIdentifier:
+          type: string
+        description:
+          type: string
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
+        created_At:
+          type: string
+          format: date-time
+        updated_At:
+          type: string
+          format: date-time
+        projectLeader:
+          type: string
+    User:
+      required:
+      - firstName
+      - password
+      - username
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        firstName:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+        created_At:
+          type: string
+          format: date-time
+        updated_At:
+          type: string
+          format: date-time
+        projects:
+          type: array
+          items:
+            type: object
+            properties: {}
+    ProjectTask:
+      required:
+      - summary
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        projectSequence:
+          type: string
+        summary:
+          type: string
+        acceptanceCriteria:
+          type: string
+        status:
+          type: string
+        priority:
+          type: integer
+          format: int32
+        dueDate:
+          type: string
+          format: date-time
+        projectIdentifier:
+          type: string
+        created_At:
+          type: string
+          format: date-time
+        updated_At:
+          type: string
+          format: date-time
+      example:
+        id: 1
+        projectSequence: "TID01-1"
+        summary: "Test Project Task 01"
+        acceptanceCriteria: "Test"
+        status: "IN_PROGRESS"
+        priority: 2
+        dueDate: "2019-04-23"
+        projectIdentifier: "TID01"
+        created_At: "2019-02-23"
+        updated_At: "2019-03-13"
+
+  requestBodies:
+              
+    UserRegistration:
+      description: A JSON object containing the information for the new user registration. The user name must be a unique one.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              username:
+                type: string
+              password:
+                type: string
+              confirmPassword:
+                type: string
+            required:
+              - firstName
+              - username
+              - password
+              - confirmPassword
+            example:
+              firstName: "Username 03"
+              username: "username03@email.com"
+              password: "password"
+              confirmPassword: "password"
+    UserLogin:
+      description: A JSON object containing the information of an existing. The user must exists in order to login successfully.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+            required:
+              - password
+              - username
+            example:
+              username: "username03@email.com"
+              password: "password"
+      
+    CreateNewProject:
+      description: A JSON object containing the information for the new project creation. The project identifier must be a unique one.
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              projectName:
+                type: string
+              projectIdentifier:
+                type: string
+              description:
+                type: string
+              start_date:
+                type: string
+                format: date-time
+              end_date:
+                type: string
+                format: date-time
+            required:
+              - projectName
+              - projectIdentifier
+              - description
+            example:
+              projectName: "Test Project 01"
+              projectIdentifier: "TID01"
+              description: "Test Project Description 01"
+              start_date: "2019-03-07"
+              end_date: "2019-03-23"
+
+    CreateNewProjectTask:
+      description: A JSON object containing the information for the new project task creation. 
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              summary:
+                type: string
+              status:
+                type: string
+              priority:
+                type: integer
+                format: int32
+              dueDate:
+                type: string
+                format: date-time
+            required:
+              - summary
+            example:
+              summary: "Test Project Task 01"
+              status: "IN_PROGRESS"
+              priority: 2
+              dueDate: "2019-04-23"
+  
+  responses:
+    UnauthorizedError:
+      description: Password and Username cannot be blank or invalid username and
+            password. Access Json Web Token (JWT) is missing or invalid.
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+            example:
+              username: "Invalid Username"
+              password: "Invalid Password" 
+            
+    UserRegistrationError:
+      description: Bad request due to missing required user entity parameters or trying to use an already existing user name.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              username:
+                type: string
+              password:
+                type: string
+              confirmPassword:
+                type: string
+            example:
+              firstName: "Please enter your first name."
+              username: "Username is required."
+              password: "Password is required." 
+              confirmPassword: "Confirmation password is required."
+              
+    ProjectIdentifierDoesNotExists:
+      description: The identifier does not exists or missing one of the parameters.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              projectIdentifier:
+                type: string
+            example:
+              projectIdentifier: "Project Identifier 'TID01' does not exists."
+        
+# security:
+#   - bearerAuth: []         # use the same name as above

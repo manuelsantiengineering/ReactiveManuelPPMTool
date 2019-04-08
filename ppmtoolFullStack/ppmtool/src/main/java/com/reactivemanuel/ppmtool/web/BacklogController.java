@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reactivemanuel.ppmtool.domain.Project;
 import com.reactivemanuel.ppmtool.domain.ProjectTask;
 import com.reactivemanuel.ppmtool.services.ProjectTaskService;
 import com.reactivemanuel.ppmtool.services.ValidationErrorService;

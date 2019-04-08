@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/securityActions";
+import Octicon, {
+  File,
+  Browser,
+  MarkGithub
+} from "@githubprimer/octicons-react";
 
 class Header extends Component {
   logout() {
@@ -13,13 +18,38 @@ class Header extends Component {
   render() {
     const { validToken, user } = this.props.security;
 
+    const swaggerDocumentation = (
+      <div className="collapse navbar-collapse" id="mobile-nav">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <a href="/v2/api-docs" className="nav-link">
+              <Octicon icon={File} size="medium" verticalAlign="middle" />{" "}
+            </a>
+          </li>
+          <li className="nav-item">
+            <a href="/swagger-ui.html" className="nav-link">
+              <Octicon icon={Browser} size="medium" verticalAlign="middle" />{" "}
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              href="https://github.com/manuelsantiengineering/projectmanagementtool"
+              className="nav-link"
+            >
+              <Octicon icon={MarkGithub} size="medium" verticalAlign="middle" />{" "}
+            </a>
+          </li>
+        </ul>
+      </div>
+    );
+
     const userIsAuthenticated = (
       <div className="collapse navbar-collapse" id="mobile-nav">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="/dashboard">
+            <Link to="/dashboard" className="nav-link">
               Dashboard
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -74,20 +104,15 @@ class Header extends Component {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-4">
         <div className="container">
-          <a className="navbar-brand" href="/">
+          <Link to="/" className="navbar-brand">
             Project Management Tool
-          </a>
-          {
-            // <button
-            //   className="navbar-toggler"
-            //   type="button"
-            //   data-toggle="collapse"
-            //   data-target="#mobile-nav"
-            // >
-            //   <span className="navbar-toggler-icon" />
-            // </button>
-          }
-          {headerLinks}
+          </Link>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item float-left">{headerLinks}</li>
+              <li className="nav-item float-right">{swaggerDocumentation}</li>
+            </ul>
+          </div>
         </div>
       </nav>
     );

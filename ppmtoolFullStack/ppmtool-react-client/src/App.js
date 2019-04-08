@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Layout/Header";
+import Footer from "./components/Layout/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AddProject from "./components/Project/AddProject";

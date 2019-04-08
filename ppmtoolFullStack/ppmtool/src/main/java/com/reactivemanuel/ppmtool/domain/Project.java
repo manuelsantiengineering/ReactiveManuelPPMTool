@@ -1,8 +1,8 @@
 package com.reactivemanuel.ppmtool.domain;
 
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,38 +21,53 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
+
 @Entity
+@ApiModel(value="Project", description="Project model for the documentation")
 public class Project {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
 	private Long id;
 	
 	@NotBlank(message="Project name is required.")
+	@ApiModelProperty(required=true, example="Swagger Project 01",position=2)
 	private String 	projectName;	
 	@NotBlank(message="Project identified is required.")
 	@Size(min=3, max=6,message="Please use 3 to 6 characters.")
 	@Column(updatable=false,unique=true)
+	@ApiModelProperty(required=true, example="SID01",position=3)
 	private String 	projectIdentifier;	
 	@NotBlank(message="Project description is required.")
+	@ApiModelProperty(required=true, example="Swagger Project Description",position=4)
 	private String 	description;		
 	@JsonFormat(pattern="yyyy-mm-dd")
+	@ApiModelProperty(example = "2019-04-04",position=5)
 	private Date 	start_date;	
 	@JsonFormat(pattern="yyyy-mm-dd")
+	 @ApiModelProperty(example = "2019-05-04",position=6)
 	private Date 	end_date;	
 	
-	@JsonFormat(pattern="yyyy-mm-dd")
+	@JsonFormat(pattern="yyyy-mm-dd")	
 	@Column(updatable=false)
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=7)
 	private Date 	created_At;	
 	@JsonFormat(pattern="yyyy-mm-dd")
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=8)
 	private Date 	updated_At;
 	
 	// "cascade=CascadeType.ALL" makes sure that the project is the
 	// owning side of the relationship. So if the project is
 	// deleted, the backlog is also deleted.
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL, mappedBy="project")
-	@JsonIgnore
-	private Backlog backlog;	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    @JsonIgnore
+    @ApiModelProperty(hidden=true)
+    private Backlog backlog;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonIgnore

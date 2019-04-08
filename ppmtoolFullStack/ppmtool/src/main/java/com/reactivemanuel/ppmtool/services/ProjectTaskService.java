@@ -5,20 +5,19 @@ import org.springframework.stereotype.Service;
 
 import com.reactivemanuel.ppmtool.domain.Backlog;
 import com.reactivemanuel.ppmtool.domain.ProjectTask;
-import com.reactivemanuel.ppmtool.exceptions.ProjectIdException;
 import com.reactivemanuel.ppmtool.exceptions.ProjectNotFoundException;
-import com.reactivemanuel.ppmtool.repositories.BacklogRepository;
-import com.reactivemanuel.ppmtool.repositories.ProjectRepository;
+//import com.reactivemanuel.ppmtool.repositories.BacklogRepository;
+//import com.reactivemanuel.ppmtool.repositories.ProjectRepository;
 import com.reactivemanuel.ppmtool.repositories.ProjectTaskRepository;
 
 @Service
 public class ProjectTaskService {
 	
-	@Autowired
-	private ProjectRepository projectRepository;	
-	
-	@Autowired
-	private BacklogRepository backlogRepository;
+//	@Autowired
+//	private ProjectRepository projectRepository;	
+//	
+//	@Autowired
+//	private BacklogRepository backlogRepository;
 	
 	@Autowired
 	private ProjectTaskRepository projectTaskRepository;

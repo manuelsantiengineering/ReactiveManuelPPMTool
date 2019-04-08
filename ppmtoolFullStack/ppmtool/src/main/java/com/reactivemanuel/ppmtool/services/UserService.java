@@ -5,7 +5,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.reactivemanuel.ppmtool.domain.User;
-import com.reactivemanuel.ppmtool.exceptions.ProjectNotFoundException;
 import com.reactivemanuel.ppmtool.exceptions.UsernameAlreadyExistsException;
 import com.reactivemanuel.ppmtool.repositories.UserRepository;
 

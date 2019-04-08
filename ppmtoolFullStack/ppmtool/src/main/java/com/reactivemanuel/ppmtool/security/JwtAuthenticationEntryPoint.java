@@ -11,7 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
-import com.reactivemanuel.ppmtool.exceptions.InvalidLoginResponse;
+import com.reactivemanuel.ppmtool.exceptions.InvalidLoginExceptionResponse;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
@@ -20,7 +20,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
 	public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 							AuthenticationException authException) throws IOException, ServletException {		
 		
-		InvalidLoginResponse invalidResponse = new InvalidLoginResponse();
+		InvalidLoginExceptionResponse invalidResponse = new InvalidLoginExceptionResponse();
 		String jsonLoginResponse = new Gson().toJson(invalidResponse);
 		
 		httpServletResponse.setContentType("application/json");

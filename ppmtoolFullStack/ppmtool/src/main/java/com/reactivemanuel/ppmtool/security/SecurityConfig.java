@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -17,7 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.reactivemanuel.ppmtool.services.CustomUserDetailsService;
 
-import static com.reactivemanuel.ppmtool.security.SecurityConstants.SIGNUP_UP_URLS;
+import static com.reactivemanuel.ppmtool.security.SecurityConstants.SIGN_UP_URLS;
+import static com.reactivemanuel.ppmtool.security.SecurityConstants.SWAGGER_API;
+import static com.reactivemanuel.ppmtool.security.SecurityConstants.SWAGGER_API_DOCS;
 //import static com.reactivemanuel.ppmtool.security.SecurityConstants.H2_URL;
 
 @Configuration
@@ -57,7 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
-        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+        .exceptionHandling()
+        .authenticationEntryPoint(unauthorizedHandler)
         .and()
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -75,7 +78,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 "/**/*.css",
                 "/**/*.js"
         ).permitAll()
-        .antMatchers(SIGNUP_UP_URLS).permitAll()
+        .antMatchers(SIGN_UP_URLS).permitAll()
+        .antMatchers(SWAGGER_API).permitAll()
+        .antMatchers(SWAGGER_API_DOCS).permitAll()
 //        .antMatchers(H2_URL).permitAll()
         .anyRequest().authenticated();
 		
