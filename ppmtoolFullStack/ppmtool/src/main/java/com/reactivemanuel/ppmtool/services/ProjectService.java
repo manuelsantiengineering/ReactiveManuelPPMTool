@@ -1,5 +1,6 @@
 package com.reactivemanuel.ppmtool.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class ProjectService {
 		return project;
 	}
 	
-	public Iterable<Project> findAllProjects(String username){
+	public List<Project> findAllProjects(String username){
 		return projectRepository.findAllByProjectLeader(username);
 	}
 	

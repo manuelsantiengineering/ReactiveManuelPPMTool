@@ -1,5 +1,7 @@
 package com.reactivemanuel.ppmtool.repositories;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +13,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long>{
 	Project findByProjectIdentifier(String projectIdentifier);	
 
 	@Override
-	Iterable<Project> findAll();
+	List<Project> findAll();
 	
-	Iterable<Project> findAllByProjectLeader(String username);
+	List<Project> findAllByProjectLeader(String username);
 }
