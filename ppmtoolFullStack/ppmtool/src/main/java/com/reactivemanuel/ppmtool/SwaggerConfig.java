@@ -31,6 +31,12 @@ import springfox.documentation.swagger.web.ApiKeyVehicle;
 import springfox.documentation.swagger.web.SecurityConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
+/*
+ * Security: https://stackoverflow.com/questions/50545286/spring-boot-swagger-ui-set-jwt-token
+ * 
+ */
+
 @EnableSwagger2
 @Configuration
 @Import(BeanValidatorPluginsConfiguration.class)
