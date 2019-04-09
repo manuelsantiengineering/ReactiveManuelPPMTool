@@ -23,9 +23,12 @@ import com.reactivemanuel.ppmtool.domain.ProjectTask;
 import com.reactivemanuel.ppmtool.services.ProjectTaskService;
 import com.reactivemanuel.ppmtool.services.ValidationErrorService;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping("/api/backlog")
 @CrossOrigin
+@Api(value = "BacklogController", description = "Endpoints to manage project tasks for a specific project.")
 public class BacklogController {
 	
 	@Autowired
