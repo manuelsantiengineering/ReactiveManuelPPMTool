@@ -35,7 +35,7 @@ public class SwaggerConfig {
                 .title("PPM Tool - Swagger & Java Spring API")
                 .description("Spring Boot MVC Example API reference for developers")
                 .termsOfServiceUrl("http://hantsy.blogspot.com")
-                .contact(new Contact("Manuel Santiago", "http://ppmtool.us-east-1.elasticbeanstalk.com/", "no email"))
+                .contact(new Contact("Manuel Santiago", "http://ppmtool.us-east-1.elasticbeanstalk.com/", "email@email.com"))
                 .license("Apache 2.0")
                 .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
                 .version("1.0.0")

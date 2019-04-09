@@ -17,33 +17,49 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
+
 @Entity
+@ApiModel(value="ProjectTask", description="Project Task model for the documentation")
 public class ProjectTask {
 
 	// Many-to-One with the Backlog
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
 	private Long id;
 	@Column(updatable=false, unique=true)
+	@ApiModelProperty(required=true,example="1",notes="Auto-generated counter of Project Tasks in a Project.",position=2)
 	private String projectSequence;
 	@NotBlank(message="Please include a project summary")
+	@ApiModelProperty(required=true,example="\"Summary of the Project Task.\"",allowEmptyValue=false,position=4)
 	private String summary;
+	@ApiModelProperty(required=true,example="\"100% Described code.\"",position=5)
 	private String acceptanceCriteria;
+	@ApiModelProperty(required=true,example="DONE",position=6)
 	private String status;
+	@ApiModelProperty(required=true,example="LOW",position=7)
 	private Integer priority;
 	@JsonFormat(pattern="yyyy-mm-dd")
+	@ApiModelProperty(example = "2019-05-01",position=8)
 	private Date dueDate;
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="backlog_id",updatable=false,nullable=false)
 	@JsonIgnore
+	@ApiModelProperty(hidden=true)
 	private Backlog backlog;
 	
 	@Column(updatable=false)
+	@ApiModelProperty(required=true,example="SID01-1", notes="Combines the Project Identifier and the Project Task Sequence.",position=3)
 	private String projectIdentifier;	
 	@JsonFormat(pattern="yyyy-mm-dd")
 	@Column(updatable=false)
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,example = "2019-04-04",position=9)
 	private Date created_At;
 	@JsonFormat(pattern="yyyy-mm-dd")
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,example = "2019-04-10",position=10)
 	private Date updated_At;
 	
 	public ProjectTask() {
