@@ -31,16 +31,16 @@ public class ProjectTask {
 	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
 	private Long id;
 	@Column(updatable=false, unique=true)
-	@ApiModelProperty(required=true,example="1",notes="Auto-generated counter of Project Tasks in a Project.",position=2)
+	@ApiModelProperty(required=true,notes="Auto-generated counter of Project Tasks in a Project.",example="1",position=2)
 	private String projectSequence;
 	@NotBlank(message="Please include a project summary")
 	@ApiModelProperty(required=true,example="\"Summary of the Project Task.\"",allowEmptyValue=false,position=4)
 	private String summary;
 	@ApiModelProperty(required=true,example="\"100% Described code.\"",position=5)
 	private String acceptanceCriteria;
-	@ApiModelProperty(required=true,example="DONE",position=6)
+	@ApiModelProperty(notes="Default: TO DO",example="DONE",position=6)
 	private String status;
-	@ApiModelProperty(required=true,example="LOW",position=7)
+	@ApiModelProperty(notes="Default: LOW",example="HIGH",position=7)
 	private Integer priority;
 	@JsonFormat(pattern="yyyy-mm-dd")
 	@ApiModelProperty(example = "2019-05-01",position=8)
@@ -52,7 +52,7 @@ public class ProjectTask {
 	private Backlog backlog;
 	
 	@Column(updatable=false)
-	@ApiModelProperty(required=true,example="SID01-1", notes="Combines the Project Identifier and the Project Task Sequence.",position=3)
+	@ApiModelProperty(required=true,notes="Combines the Project Identifier and the Project Task Sequence.",example="SID01-1",position=3)
 	private String projectIdentifier;	
 	@JsonFormat(pattern="yyyy-mm-dd")
 	@Column(updatable=false)
