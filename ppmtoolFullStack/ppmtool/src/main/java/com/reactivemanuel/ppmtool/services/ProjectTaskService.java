@@ -1,13 +1,13 @@
 package com.reactivemanuel.ppmtool.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reactivemanuel.ppmtool.domain.Backlog;
 import com.reactivemanuel.ppmtool.domain.ProjectTask;
 import com.reactivemanuel.ppmtool.exceptions.ProjectNotFoundException;
-//import com.reactivemanuel.ppmtool.repositories.BacklogRepository;
-//import com.reactivemanuel.ppmtool.repositories.ProjectRepository;
 import com.reactivemanuel.ppmtool.repositories.ProjectTaskRepository;
 
 @Service
@@ -51,7 +51,7 @@ public class ProjectTaskService {
 	}
 
 
-	public Iterable<ProjectTask> findBacklogById(String projectIdentifier, String username) {		
+	public List<ProjectTask> findBacklogById(String projectIdentifier, String username) {		
 		projectService.findProjectByIdentifier(projectIdentifier, username);		
 		return projectTaskRepository.findByProjectIdentifierOrderByPriority(projectIdentifier);
 	}

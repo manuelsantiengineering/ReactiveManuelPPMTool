@@ -1,6 +1,7 @@
 package com.reactivemanuel.ppmtool.web;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -45,7 +46,7 @@ public class BacklogController {
 	}
 	
 	@GetMapping("/{backlog_id}")
-	public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id, Principal principal){		
+	public List<ProjectTask> getProjectBacklog(@PathVariable String backlog_id, Principal principal){		
 		return projectTaskService.findBacklogById(backlog_id, principal.getName());		
 	}
 	
