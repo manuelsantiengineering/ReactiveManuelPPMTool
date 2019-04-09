@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Example;
 import io.swagger.annotations.ExampleProperty;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +57,7 @@ public class ProjectController {
         				                value = "{\"projectIdentifier\":\"Project Identifier 'TID01' does not exists.\"}"
         				            )
         				        })),
-        @ApiResponse(code = 401, message = "Password and Username cannot be blank or invalid username and password. Access Json Web Token (JWT) is missing or invalid.",
+        @ApiResponse(code = 401, message = "Unauthorized",
         				examples = @Example(value = { 
         								@ExampleProperty(mediaType = "application/json", value = "{\"username\": \"Invalid Username\",\"password\": \"Invalid Password\"}" ),
         								@ExampleProperty(mediaType = "application/json", value = "Access Json Web Token (JWT) is missing or invalid." ) 
@@ -82,18 +81,27 @@ public class ProjectController {
 		return projectService.findAllProjects(principal.getName());		
 	}
 	
-	@ApiResponses({
-        @ApiResponse(code = 200, message = "Success!"),
-        @ApiResponse(code = 400, message = "The identifier does not exists."),
-        @ApiResponse(code = 401, message = "Password and Username cannot be blank or invalid username and password. Access Json Web Token (JWT) is missing or invalid.",
-        				examples = @Example(value = { 
-        								@ExampleProperty(mediaType = "Example json", value = "{\"username\": \"Invalid Username\",\"password\": \"Invalid Password\"}" ),
-        								@ExampleProperty(mediaType = "Example string", value = "Access Json Web Token (JWT) is missing or invalid." ) 
-        							})),
-        @ApiResponse(code = 500, message = "Unexpected error.")
-    })
-//    @GetMapping("/{projectId}")
-    @RequestMapping(value = "/{projectId}", method= RequestMethod.GET, produces = "application/json")
+	
+//	@ApiOperation(
+//    		httpMethod = "GET",
+//    		value = "Create a new Project", 
+//    		notes = "This endpoint uses a post request to create a new project. The user has to be logged in and pass a JWT in the header in order to make the request."
+//    				+ "The request body must include the new project information. Returns a json with the information of the new project.",
+//			nickname="createNewProject",
+//			response = Project.class
+//    				)
+//	@ApiResponses({
+//        @ApiResponse(code = 200, message = "Success!"),
+//        @ApiResponse(code = 400, message = "The identifier does not exists."),
+//        @ApiResponse(code = 401, message = "Unauthorized",
+//        				examples = @Example(value = { 
+//        								@ExampleProperty(mediaType = "Example json", value = "{\"username\": \"Invalid Username\",\"password\": \"Invalid Password\"}" ),
+//        								@ExampleProperty(mediaType = "Example string", value = "Access Json Web Token (JWT) is missing or invalid." ) 
+//        							})),
+//        @ApiResponse(code = 500, message = "Unexpected error.")
+//    })
+    @GetMapping("/{projectId}")
+//    @RequestMapping(value = "/{projectId}", method= RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<?> getProjectByIdentifier(@PathVariable String projectIdentifier, Principal principal){
 		Project project = projectService.findProjectByIdentifier(projectIdentifier.toUpperCase(), principal.getName());
 		return new ResponseEntity<Project>(project, HttpStatus.OK); 
