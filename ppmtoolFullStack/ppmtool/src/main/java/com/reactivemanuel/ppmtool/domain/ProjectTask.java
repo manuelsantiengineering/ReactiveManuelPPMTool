@@ -29,6 +29,7 @@ public class ProjectTask {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
+	@ApiModelProperty(hidden=true)
 	private Long id;
 	@Column(updatable=false, unique=true)
 	@ApiModelProperty(required=true,notes="Auto-generated counter of Project Tasks in a Project.",example="1",position=2)

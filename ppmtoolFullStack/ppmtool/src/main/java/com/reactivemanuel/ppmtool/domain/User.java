@@ -38,6 +38,7 @@ public class User implements UserDetails{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
+	@ApiModelProperty(hidden=true)
     private Long id;
 	
 	@Email(message= "Username needs to be an email.")	

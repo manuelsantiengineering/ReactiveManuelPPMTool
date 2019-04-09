@@ -33,6 +33,7 @@ public class Project {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 //	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
+	@ApiModelProperty(hidden=true)
 	private Long id;
 	
 	@NotBlank(message="Project name is required.")
@@ -73,8 +74,10 @@ public class Project {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonIgnore
+	@ApiModelProperty(required=true, example="username@email.com",position=9)
 	private User user;
 	
+	@ApiModelProperty(required=true, example="username@email.com",position=10)
 	private String projectLeader;
 	
 	public Project() {
