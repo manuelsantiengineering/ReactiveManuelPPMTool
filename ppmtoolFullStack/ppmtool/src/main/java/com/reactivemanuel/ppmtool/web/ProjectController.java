@@ -50,18 +50,8 @@ public class ProjectController {
     				)
     @ApiResponses(value={
         @ApiResponse(code = 201, message = "Success creating the new Project", response=Project.class),
-        @ApiResponse(code = 400, message = "Missing one of the required parameters or trying to use an existing Project Identifier.",
-        				examples = @Example(value = {
-        				        @ExampleProperty(
-        				                mediaType="application/json",
-        				                value = "{\"projectIdentifier\":\"Project Identifier 'TID01' does not exists.\"}"
-        				            )
-        				        })),
-        @ApiResponse(code = 401, message = "Unauthorized",
-        				examples = @Example(value = { 
-        								@ExampleProperty(mediaType = "application/json", value = "{\"username\": \"Invalid Username\",\"password\": \"Invalid Password\"}" ),
-        								@ExampleProperty(mediaType = "application/json", value = "Access Json Web Token (JWT) is missing or invalid." ) 
-        							})),
+        @ApiResponse(code = 400, message = "Missing one of the required parameters or trying to use an existing Project Identifier."),
+        @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 500, message = "Unexpected error.")
     })
     @RequestMapping(value = "", method= RequestMethod.POST, produces = "application/json")

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
+//import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 @Entity
 @ApiModel(value="ProjectTask", description="Project Task model for the documentation")
@@ -28,7 +28,7 @@ public class ProjectTask {
 	// Many-to-One with the Backlog
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
+//	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
 	private Long id;
 	@Column(updatable=false, unique=true)
 	@ApiModelProperty(required=true,notes="Auto-generated counter of Project Tasks in a Project.",example="1",position=2)
@@ -56,10 +56,12 @@ public class ProjectTask {
 	private String projectIdentifier;	
 	@JsonFormat(pattern="yyyy-mm-dd")
 	@Column(updatable=false)
-	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,example = "2019-04-04",position=9)
+//	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,example = "2019-04-04",position=9)
+	@ApiModelProperty(example = "2019-04-04",position=9)
 	private Date created_At;
 	@JsonFormat(pattern="yyyy-mm-dd")
-	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,example = "2019-04-10",position=10)
+//	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,example = "2019-04-10",position=10)
+	@ApiModelProperty(example = "2019-04-10",position=10)
 	private Date updated_At;
 	
 	public ProjectTask() {

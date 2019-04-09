@@ -55,7 +55,8 @@ public class UserController {
     				+ "The request body must include the new project information. Returns a json with the information of the new project.",
 			nickname="authenticateUser"
     				)
-	@PostMapping("/login")
+//	@PostMapping("/login")
+	@RequestMapping(value = "/login", method= RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result){
 		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);
 		if(errorMap!=null) {	return errorMap;	}

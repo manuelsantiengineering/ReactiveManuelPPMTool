@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiModelProperty.AccessMode;
+//import io.swagger.annotations.ApiModelProperty.AccessMode;
 
 @Entity
 @ApiModel(value="User", description="Project model for the documentation")
@@ -37,7 +37,7 @@ public class User implements UserDetails{
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
+//	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
     private Long id;
 	
 	@Email(message= "Username needs to be an email.")	
@@ -57,10 +57,12 @@ public class User implements UserDetails{
 	private String confirmPassword;
 	
 //	@JsonFormat(pattern="yyyy-mm-dd")
-	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=6)
+//	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=6)
+	@ApiModelProperty(example = "2019-04-04",position=6)
 	private Date created_At;
 //	@JsonFormat(pattern="yyyy-mm-dd")
-	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=7)
+//	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=7)
+	@ApiModelProperty(example = "2019-04-04",position=7)
 	private Date updated_At;
 
 	//OneToMany with the project
