@@ -36,8 +36,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig {
 	
-	public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String DEFAULT_INCLUDE_PATTERN = "/api/.*";
+	public static final String AUTHORIZATION_HEADER 	= "Authorization";
+    public static final String DEFAULT_INCLUDE_PATTERN 	= "/api/.*";
+    public static final String JWT_PATH_01 				= "/api/project.*";
+    public static final String JWT_PATH_02 				= "/api/backlog.*";
     private final Logger log = LoggerFactory.getLogger(SwaggerConfig.class);
 	
 //	@Bean
@@ -94,7 +96,8 @@ public class SwaggerConfig {
 	private SecurityContext securityContext() {
         return SecurityContext.builder()
             .securityReferences(defaultAuth())
-            .forPaths(PathSelectors.regex(DEFAULT_INCLUDE_PATTERN))
+            .forPaths(PathSelectors.regex(JWT_PATH_01))
+            .forPaths(PathSelectors.regex(JWT_PATH_02))
             .build();
     }
 	
