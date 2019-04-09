@@ -25,34 +25,47 @@ import org.springframework.security.core.userdetails.UserDetails;
 //import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModelProperty.AccessMode;
+
 @Entity
+@ApiModel(value="User", description="Project model for the documentation")
 public class User implements UserDetails{
 
 	private static final long serialVersionUID = 3256080218380213238L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY,position=1)
     private Long id;
 	
 	@Email(message= "Username needs to be an email.")	
 	@NotBlank(message="Username is required.")
 	@Column(unique=true,updatable=false)
+	@ApiModelProperty(required=true,notes="The username must be an email.",example="username@email.com",position=2)
 	private String username;
 	@NotBlank(message="Please enter your first name.")
+	@ApiModelProperty(required=true,example="Username",position=3)
 	private String firstName;
 	@NotBlank(message="Password is required.")
+	@ApiModelProperty(required=true,notes="Password is encrypted.",position=4)
 	private String password;
 	@Transient
 //	@NotBlank(message="Confirmation password is required.")
+	@ApiModelProperty(required=true,notes="Confirmation password",position=5)
 	private String confirmPassword;
 	
 //	@JsonFormat(pattern="yyyy-mm-dd")
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=6)
 	private Date created_At;
 //	@JsonFormat(pattern="yyyy-mm-dd")
+	@ApiModelProperty(accessMode = AccessMode.READ_ONLY, example = "2019-04-04",position=7)
 	private Date updated_At;
 
 	//OneToMany with the project
 	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+	@ApiModelProperty(hidden=true)
 	private List<Project> projects = new ArrayList<>();
 	
 	public User() {
