@@ -9,16 +9,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Example;
-import io.swagger.annotations.ExampleProperty;
+//import io.swagger.annotations.Example;
+//import io.swagger.annotations.ExampleProperty;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,40 +62,63 @@ public class ProjectController {
 		projectService.saveOrUpdateProject(project, principal.getName());
 		return new ResponseEntity<Project>(project, HttpStatus.CREATED);
 		
-	}
+	}	
 	
-	@GetMapping("/all")
+	@ApiOperation(
+    		httpMethod = "GET",
+    		value = "Get a list of the user projects.", 
+    		notes = "This endpoint uses a get request to get all of the user projects. Returns a list with all of the projects created by the logged user."
+    					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
+			nickname="getAllProjects",
+			response = Project.class
+    				)
+	@ApiResponses({
+        @ApiResponse(code = 200, message = "Success!"),
+        @ApiResponse(code = 400, message = "Invalid Project Identifier"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 500, message = "Unexpected error.")
+    })
+	@RequestMapping(value = "/all", method= RequestMethod.GET, produces = "application/json")
 	public List<Project> getAllProjects(Principal principal){
 		return projectService.findAllProjects(principal.getName());		
 	}
 	
 	
-//	@ApiOperation(
-//    		httpMethod = "GET",
-//    		value = "Create a new Project", 
-//    		notes = "This endpoint uses a post request to create a new project. The user has to be logged in and pass a JWT in the header in order to make the request."
-//    				+ "The request body must include the new project information. Returns a json with the information of the new project.",
-//			nickname="createNewProject",
-//			response = Project.class
-//    				)
-//	@ApiResponses({
-//        @ApiResponse(code = 200, message = "Success!"),
-//        @ApiResponse(code = 400, message = "The identifier does not exists."),
-//        @ApiResponse(code = 401, message = "Unauthorized",
-//        				examples = @Example(value = { 
-//        								@ExampleProperty(mediaType = "Example json", value = "{\"username\": \"Invalid Username\",\"password\": \"Invalid Password\"}" ),
-//        								@ExampleProperty(mediaType = "Example string", value = "Access Json Web Token (JWT) is missing or invalid." ) 
-//        							})),
-//        @ApiResponse(code = 500, message = "Unexpected error.")
-//    })
-    @GetMapping("/{projectId}")
-//    @RequestMapping(value = "/{projectId}", method= RequestMethod.GET, produces = "application/json")
+	@ApiOperation(
+    		httpMethod = "GET",
+    		value = "Find project by Project Identifier.", 
+    		notes = "This endpoint uses a get request to get the project with the specified project identifier."
+    					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
+			nickname="getProjectByIdentifier",
+			response = Project.class
+    				)
+	@ApiResponses({
+        @ApiResponse(code = 200, message = "Success!"),
+        @ApiResponse(code = 400, message = "Invalid Project Identifier"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 500, message = "Unexpected error.")
+    })
+    @RequestMapping(value = "/{projectIdentifier}", method= RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<?> getProjectByIdentifier(@PathVariable String projectIdentifier, Principal principal){
 		Project project = projectService.findProjectByIdentifier(projectIdentifier.toUpperCase(), principal.getName());
 		return new ResponseEntity<Project>(project, HttpStatus.OK); 
 	}
 	
-	@DeleteMapping("/{projectIdentifier}")
+	@ApiOperation(
+    		httpMethod = "DELETE",
+    		value = "Deletes a project by Project Identifier.", 
+    		notes = "This endpoint uses a delete request to delete the project with the specified project identifier."
+    					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
+			nickname="deleteProjectByIdentifier",
+			response = Project.class
+    				)
+	@ApiResponses({
+        @ApiResponse(code = 200, message = "Success!"),
+        @ApiResponse(code = 400, message = "Invalid Project Identifier"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 500, message = "Unexpected error.")
+    })
+    @RequestMapping(value = "/{projectIdentifier}", method= RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<?> deleteProjectByIdentifier(@PathVariable String projectIdentifier, Principal principal){
 		Project project = projectService.deleteProjectByIdentifier(projectIdentifier.toUpperCase(), principal.getName());
 		return new ResponseEntity<Project>(project, HttpStatus.OK); 
