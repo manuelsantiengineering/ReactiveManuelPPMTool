@@ -35,13 +35,13 @@ public class ProjectTask {
 	@ApiModelProperty(required=true,notes="Auto-generated counter of Project Tasks in a Project.",example="1",position=2)
 	private String projectSequence;
 	@NotBlank(message="Please include a project summary")
-	@ApiModelProperty(required=true,example="\"Summary of the Project Task.\"",allowEmptyValue=false,position=4)
+	@ApiModelProperty(required=true,example="Summary of the Project Task.",allowEmptyValue=false,position=4)
 	private String summary;
-	@ApiModelProperty(required=true,example="\"100% Described code.\"",position=5)
+	@ApiModelProperty(required=true,example="100% Described code.",position=5)
 	private String acceptanceCriteria;
-	@ApiModelProperty(notes="Default: TO DO",example="DONE",position=6)
+	@ApiModelProperty(notes="Default: IN_PROGRESS",example="IN_PROGRESS",position=6)
 	private String status;
-	@ApiModelProperty(notes="Default: LOW",example="HIGH",position=7)
+	@ApiModelProperty(notes="Default: High",example="3",position=7)
 	private Integer priority;
 	@JsonFormat(pattern="yyyy-mm-dd")
 	@ApiModelProperty(example = "2019-05-01",position=8)
