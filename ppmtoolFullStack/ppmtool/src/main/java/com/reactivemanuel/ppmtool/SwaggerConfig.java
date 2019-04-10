@@ -83,10 +83,10 @@ public class SwaggerConfig {
 			  .directModelSubstitute(java.time.LocalDateTime.class, Date.class)	
 			  .genericModelSubstitutes(ResponseEntity.class)		  
 			  .useDefaultResponseMessages(false)
-			  .globalResponseMessage(RequestMethod.GET,defaultResponses())
-			  .globalResponseMessage(RequestMethod.POST,defaultResponses())
-			  .globalResponseMessage(RequestMethod.DELETE,defaultResponses())
-			  .globalResponseMessage(RequestMethod.PATCH,defaultResponses())
+			  .globalResponseMessage(RequestMethod.GET,defaultGetResponses())
+			  .globalResponseMessage(RequestMethod.POST,defaultPostResponses())
+			  .globalResponseMessage(RequestMethod.DELETE,defaultGetResponses())
+			  .globalResponseMessage(RequestMethod.PATCH,defaultGetResponses())
 			  .securitySchemes(Lists.newArrayList(apiKey()))
 			  .securityContexts(Lists.newArrayList(securityContext()))
 			  
@@ -131,10 +131,17 @@ public class SwaggerConfig {
     }
 	
 	
-	List<ResponseMessage> defaultResponses(){
+	List<ResponseMessage> defaultGetResponses(){
 		return Lists.newArrayList(
 				new ResponseMessageBuilder().code(200).message("Success.").build(),
 				new ResponseMessageBuilder().code(401).message("Unauthorized.").build(),
+				new ResponseMessageBuilder().code(500).message("Unexpected error.").build()
+            		);
+	}
+	
+	List<ResponseMessage> defaultPostResponses(){
+		return Lists.newArrayList(
+				new ResponseMessageBuilder().code(200).message("Success.").build(),
 				new ResponseMessageBuilder().code(500).message("Unexpected error.").build()
             		);
 	}

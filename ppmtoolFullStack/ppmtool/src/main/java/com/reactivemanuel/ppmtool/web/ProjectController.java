@@ -47,7 +47,8 @@ public class ProjectController {
 			response = Project.class
     				)
     @ApiResponses(value={
-        @ApiResponse(code = 400, message = "Missing one of the required parameters or trying to use an existing Project Identifier.")
+        @ApiResponse(code = 400, message = "Missing one of the required parameters or trying to use an existing Project Identifier."),
+        @ApiResponse(code = 401, message = "Unauthorized.")
     })
     @RequestMapping(value = "", method= RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, 
