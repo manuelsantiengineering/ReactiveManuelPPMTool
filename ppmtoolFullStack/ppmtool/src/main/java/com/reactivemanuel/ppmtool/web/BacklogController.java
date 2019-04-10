@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+//import org.springframework.web.bind.annotation.DeleteMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 //import com.reactivemanuel.ppmtool.domain.Project;
+//import com.reactivemanuel.ppmtool.domain.Project;
 import com.reactivemanuel.ppmtool.domain.ProjectTask;
 import com.reactivemanuel.ppmtool.services.ProjectTaskService;
 import com.reactivemanuel.ppmtool.services.ValidationErrorService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+//import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
@@ -58,7 +59,6 @@ public class BacklogController {
         @ApiResponse(code = 401, message = "Unauthorized.")
     })
     @RequestMapping(value = "/{backlog_id}", method= RequestMethod.POST, produces = "application/json")	
-//	@PostMapping("/{backlog_id}")
 	public ResponseEntity<?> createNewProjectTask(@Valid @RequestBody ProjectTask projectTask, 
 											BindingResult result, @PathVariable String backlog_id, 
 											Principal principal){
@@ -69,12 +69,36 @@ public class BacklogController {
 		return new ResponseEntity<ProjectTask>(projectTaskReturn, HttpStatus.CREATED);		
 	}
 	
-	@GetMapping("/{backlog_id}")
+	@ApiOperation(
+    		httpMethod = "GET",
+    		value = "Get a list of the project tasks for the project with project identifier.", 
+    		notes = "This endpoint uses a get request to get all of the project tasks inside the project with a specific project identifier."
+    					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
+			nickname="getProjectBacklog",
+			response = List.class
+    				)
+	@ApiResponses({
+        @ApiResponse(code = 400, message = "Invalid Project Identifier")
+    })
+	@RequestMapping(value = "/{backlog_id}", method= RequestMethod.GET, produces = "application/json")	
+//	@GetMapping("/{backlog_id}")
 	public List<ProjectTask> getProjectBacklog(@PathVariable String backlog_id, Principal principal){		
 		return projectTaskService.findBacklogById(backlog_id, principal.getName());		
 	}
-	
-	@GetMapping("/{backlog_id}/{projectTask_id}")
+		
+	@ApiOperation(
+    		httpMethod = "GET",
+    		value = "Get a specific project task for the project with project identifier.", 
+    		notes = "This endpoint uses a get request to get a specific project task with the project task id"
+    					+" inside of the project with a specific project identifier."
+    					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
+			nickname="getProjectTask",
+			response = ProjectTask.class
+    				)
+	@ApiResponses({
+        @ApiResponse(code = 400, message = "Invalid Project Identifier")
+    })
+	@RequestMapping(value = "/{backlog_id}/{projectTask_id}", method= RequestMethod.GET, produces = "application/json")	
 	public ResponseEntity<?> getProjectTask(@PathVariable String backlog_id, @PathVariable String projectTask_id,
 											Principal principal){	
 		
@@ -87,7 +111,20 @@ public class BacklogController {
 
 	}
 	
-	@PatchMapping("/{backlog_id}/{projectTask_id}")
+	@ApiOperation(
+    		httpMethod = "PATCH",
+    		value = "Updates a specific project task for the project with project identifier.", 
+    		notes = "This endpoint uses a patch request to update a specific project task with the project task id"
+    					+" inside of the project with a specific project identifier."
+    					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
+			nickname="updateProjectTask",
+			response = ProjectTask.class
+    				)
+	@ApiResponses({
+        @ApiResponse(code = 400, message = "Invalid Project Identifier")
+    })
+	@RequestMapping(value = "/{backlog_id}/{projectTask_id}", method= RequestMethod.PATCH, produces = "application/json")	
+//	@PatchMapping("/{backlog_id}/{projectTask_id}")
 	public ResponseEntity<?> updateProjectTask(@Valid @RequestBody ProjectTask projectTask, 
 											BindingResult result, @PathVariable String backlog_id, 
 											@PathVariable String projectTask_id, Principal principal){	
@@ -100,7 +137,20 @@ public class BacklogController {
 
 	}
 	
-	@DeleteMapping("/{backlog_id}/{projectTask_id}")
+	@ApiOperation(
+    		httpMethod = "DELETE",
+    		value = "Deletes a specific project task for the project with project identifier.", 
+    		notes = "This endpoint uses a delete request to remove a specific project task with the project task id"
+    					+" inside of the project with a specific project identifier."
+    					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
+			nickname="deleteProjectTask",
+			response = ProjectTask.class
+    				)
+	@ApiResponses({
+        @ApiResponse(code = 400, message = "Invalid Project Identifier")
+    })
+	@RequestMapping(value = "/{backlog_id}/{projectTask_id}", method= RequestMethod.DELETE, produces = "application/json")	
+//	@DeleteMapping("/{backlog_id}/{projectTask_id}")
 	public ResponseEntity<?> deleteProjectTask(@PathVariable String backlog_id, @PathVariable String projectTask_id,
 											Principal principal){
 		
