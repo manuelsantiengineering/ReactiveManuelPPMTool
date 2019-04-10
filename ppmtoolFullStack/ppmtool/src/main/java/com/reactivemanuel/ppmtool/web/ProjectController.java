@@ -7,7 +7,7 @@ import javax.validation.Valid;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+//import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 //import io.swagger.annotations.Example;
@@ -68,7 +68,7 @@ public class ProjectController {
     		notes = "This endpoint uses a get request to get all of the user projects. Returns a list with all of the projects created by the logged user."
     					+" The user has to be logged in and pass a JWT in the header in order to make the request.",
 			nickname="getAllProjects",
-			response = Project.class
+			response = List.class
     				)
 	@ApiResponses({
         @ApiResponse(code = 400, message = "Invalid Project Identifier")

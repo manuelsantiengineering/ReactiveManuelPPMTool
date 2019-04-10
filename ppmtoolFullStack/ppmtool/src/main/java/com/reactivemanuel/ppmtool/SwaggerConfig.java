@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Pageable;
+//import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -90,9 +90,9 @@ public class SwaggerConfig {
 			  .securitySchemes(Lists.newArrayList(apiKey()))
 			  .securityContexts(Lists.newArrayList(securityContext()))
 			  
-			  .forCodeGeneration(true)			  			 
-			  .ignoredParameterTypes(Pageable.class)
-			  .ignoredParameterTypes(java.sql.Date.class)
+//			  .forCodeGeneration(true)			  			 
+//			  .ignoredParameterTypes(Pageable.class)
+//			  .ignoredParameterTypes(java.sql.Date.class)
 
 			  .apiInfo(apiInfo());                                           
     }
