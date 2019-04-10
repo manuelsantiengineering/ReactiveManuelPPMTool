@@ -102,8 +102,9 @@ public class SwaggerConfig {
 	private SecurityContext securityContext() {
         return SecurityContext.builder()
             .securityReferences(defaultAuth())
-            .forPaths(PathSelectors.regex(JWT_PATH_01))
-            .forPaths(PathSelectors.regex(JWT_PATH_02))
+            .forPaths(PathSelectors.regex(DEFAULT_INCLUDE_PATTERN))
+//            .forPaths(PathSelectors.regex(JWT_PATH_01))
+//            .forPaths(PathSelectors.regex(JWT_PATH_02))
             .build();
     }
 	
