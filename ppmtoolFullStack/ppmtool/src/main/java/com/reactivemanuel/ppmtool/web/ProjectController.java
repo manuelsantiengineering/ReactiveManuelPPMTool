@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 //import io.swagger.annotations.Example;
@@ -52,8 +53,7 @@ public class ProjectController {
     })
     @RequestMapping(value = "", method= RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, 
-											BindingResult result, Principal principal){
-		
+											BindingResult result, Principal principal){		
 		ResponseEntity<?> errorMap = validationErrorService.mapValidationErrorService(result);	
 		if(errorMap!=null)	{	return errorMap;	}
 		

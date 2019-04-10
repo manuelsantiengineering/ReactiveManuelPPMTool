@@ -35,9 +35,9 @@ public class ProjectTask {
 	@ApiModelProperty(required=true,notes="Auto-generated counter of Project Tasks in a Project.",example="1",position=2)
 	private String projectSequence;
 	@NotBlank(message="Please include a project summary")
-	@ApiModelProperty(required=true,example="\"Summary of the Project Task.\"",allowEmptyValue=false,position=4)
+	@ApiModelProperty(required=true,example="Summary of the Project Task.",allowEmptyValue=false,position=4)
 	private String summary;
-	@ApiModelProperty(required=true,example="\"100% Described code.\"",position=5)
+	@ApiModelProperty(required=true,example="100% Described code.",position=5)
 	private String acceptanceCriteria;
 	@ApiModelProperty(notes="Default: TO DO",example="DONE",position=6)
 	private String status;
