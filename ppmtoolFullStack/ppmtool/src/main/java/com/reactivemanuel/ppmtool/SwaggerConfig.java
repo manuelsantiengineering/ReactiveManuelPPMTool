@@ -5,13 +5,17 @@ import static springfox.documentation.builders.PathSelectors.regex;
 import java.util.Date;
 import java.util.List;
 
+<<<<<<< HEAD
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
+=======
+>>>>>>> swagger01
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.collect.Lists;
 
@@ -19,10 +23,12 @@ import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -44,44 +50,64 @@ public class SwaggerConfig {
 	
 	public static final String AUTHORIZATION_HEADER 	= "Authorization";
     public static final String DEFAULT_INCLUDE_PATTERN 	= "/api/.*";
+<<<<<<< HEAD
     public static final String JWT_PATH_01 				= "/api/project.*";
     public static final String JWT_PATH_02 				= "/api/backlog.*";
 //    private final Logger log = LoggerFactory.getLogger(SwaggerConfig.class);
 	
+=======
+    public static final String JWT_PATH_01 				= "/api/project/.*";
+    public static final String JWT_PATH_02 				= "/api/backlog/.*";
+
+>>>>>>> swagger01
 //	@Bean
 //    public Docket api() { 
 //        return new Docket(DocumentationType.SWAGGER_2)
-////			  .useDefaultResponseMessages(false)
+//              .pathMapping("/")
+//			  .useDefaultResponseMessages(false)
+//			  .forCodeGeneration(true)
+//			  .securityContexts(Lists.newArrayList(securityContext()))
+//			  .securitySchemes(Lists.newArrayList(apiKey()))
+//			  .genericModelSubstitutes(ResponseEntity.class)
+//			  .ignoredParameterTypes(Pageable.class)
+//			  .ignoredParameterTypes(java.sql.Date.class)
+//			  .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
+//			  .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)
+//			  .directModelSubstitute(java.time.LocalDateTime.class, Date.class)			  
 //			  .select()                                  
-////			  .apis(RequestHandlerSelectors.any())
 //			  .apis(RequestHandlerSelectors.basePackage("com.reactivemanuel.ppmtool.web"))
 //			  .paths(regex(DEFAULT_INCLUDE_PATTERN))  
-////			  .paths(PathSelectors.ant("/api/*"))  
-////			  .paths(PathSelectors.any())   
 //			  .build()
 //			  .apiInfo(apiInfo());                                           
 //    }
 
+    
 	@Bean
     public Docket api() { 
         return new Docket(DocumentationType.SWAGGER_2)
+        	  .select()  
+        	  .apis(RequestHandlerSelectors.basePackage("com.reactivemanuel.ppmtool.web"))
+        	  .paths(regex(DEFAULT_INCLUDE_PATTERN))  
+        	  .build()        	  
+              .pathMapping("/")
+              .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
+			  .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)
+			  .directModelSubstitute(java.time.LocalDateTime.class, Date.class)	
+			  .genericModelSubstitutes(ResponseEntity.class)		  
 			  .useDefaultResponseMessages(false)
-			  .forCodeGeneration(true)
-			  .securityContexts(Lists.newArrayList(securityContext()))
+			  .globalResponseMessage(RequestMethod.GET,defaultGetResponses())
+			  .globalResponseMessage(RequestMethod.POST,defaultPostResponses())
+			  .globalResponseMessage(RequestMethod.DELETE,defaultGetResponses())
+			  .globalResponseMessage(RequestMethod.PATCH,defaultGetResponses())
 			  .securitySchemes(Lists.newArrayList(apiKey()))
-			  .genericModelSubstitutes(ResponseEntity.class)
+			  .securityContexts(Lists.newArrayList(securityContext()))
+			  
+			  .forCodeGeneration(true)			  			 
 			  .ignoredParameterTypes(Pageable.class)
 			  .ignoredParameterTypes(java.sql.Date.class)
-			  .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
-			  .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)
-			  .directModelSubstitute(java.time.LocalDateTime.class, Date.class)			  
-			  .select()                                  
-			  .apis(RequestHandlerSelectors.basePackage("com.reactivemanuel.ppmtool.web"))
-			  .paths(regex(DEFAULT_INCLUDE_PATTERN))  
-			  .build()
+
 			  .apiInfo(apiInfo());                                           
     }
-    
     
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
@@ -115,4 +141,20 @@ public class SwaggerConfig {
         authorizationScopes[0] = authorizationScope;
         return Lists.newArrayList(new SecurityReference("JWT", authorizationScopes));
     }
+	
+	
+	List<ResponseMessage> defaultGetResponses(){
+		return Lists.newArrayList(
+				new ResponseMessageBuilder().code(200).message("Success.").build(),
+				new ResponseMessageBuilder().code(401).message("Unauthorized.").build(),
+				new ResponseMessageBuilder().code(500).message("Unexpected error.").build()
+            		);
+	}
+	
+	List<ResponseMessage> defaultPostResponses(){
+		return Lists.newArrayList(
+				new ResponseMessageBuilder().code(200).message("Success.").build(),
+				new ResponseMessageBuilder().code(500).message("Unexpected error.").build()
+            		);
+	}
 }

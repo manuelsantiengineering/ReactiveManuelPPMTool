@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 web: java $JAVA_OPTS -jar target/ppmtool-0.0.12-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
+=======
+web: java $JAVA_OPTS -jar target/ppmtool-0.0.13-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS
+>>>>>>> swagger01
