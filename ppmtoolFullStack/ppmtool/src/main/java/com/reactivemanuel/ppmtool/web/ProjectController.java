@@ -47,10 +47,7 @@ public class ProjectController {
 			response = Project.class
     				)
     @ApiResponses(value={
-        @ApiResponse(code = 201, message = "Success creating the new Project", response=Project.class),
-        @ApiResponse(code = 400, message = "Missing one of the required parameters or trying to use an existing Project Identifier."),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 500, message = "Unexpected error.")
+        @ApiResponse(code = 400, message = "Missing one of the required parameters or trying to use an existing Project Identifier.")
     })
     @RequestMapping(value = "", method= RequestMethod.POST, produces = "application/json")
 	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, 
@@ -73,10 +70,7 @@ public class ProjectController {
 			response = Project.class
     				)
 	@ApiResponses({
-        @ApiResponse(code = 200, message = "Success!"),
-        @ApiResponse(code = 400, message = "Invalid Project Identifier"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 500, message = "Unexpected error.")
+        @ApiResponse(code = 400, message = "Invalid Project Identifier")
     })
 	@RequestMapping(value = "/all", method= RequestMethod.GET, produces = "application/json")
 	public List<Project> getAllProjects(Principal principal){
@@ -93,10 +87,7 @@ public class ProjectController {
 			response = Project.class
     				)
 	@ApiResponses({
-        @ApiResponse(code = 200, message = "Success!"),
-        @ApiResponse(code = 400, message = "Invalid Project Identifier"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 500, message = "Unexpected error.")
+        @ApiResponse(code = 400, message = "Invalid Project Identifier")
     })
     @RequestMapping(value = "/{projectIdentifier}", method= RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<?> getProjectByIdentifier(@PathVariable String projectIdentifier, Principal principal){
@@ -113,10 +104,7 @@ public class ProjectController {
 			response = Project.class
     				)
 	@ApiResponses({
-        @ApiResponse(code = 200, message = "Success!"),
-        @ApiResponse(code = 400, message = "Invalid Project Identifier"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 500, message = "Unexpected error.")
+        @ApiResponse(code = 400, message = "Invalid Project Identifier")
     })
     @RequestMapping(value = "/{projectIdentifier}", method= RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<?> deleteProjectByIdentifier(@PathVariable String projectIdentifier, Principal principal){
