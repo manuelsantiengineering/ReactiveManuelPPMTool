@@ -5,11 +5,7 @@
 
     <groupId>io.reactivespring</groupId>
     <artifactId>ppmtool</artifactId>
-<<<<<<< HEAD
-    <version>0.0.12-SNAPSHOT</version>
-=======
     <version>0.0.13-SNAPSHOT</version>
->>>>>>> swagger01
     <packaging>jar</packaging>
 
     <name>ppmtool</name>
