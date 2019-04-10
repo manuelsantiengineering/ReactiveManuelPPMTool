@@ -33,7 +33,7 @@ class Header extends Component {
           </li>
           <li className="nav-item">
             <a
-              href="https://github.com/manuelsantiengineering/projectmanagementtool"
+              href="https://github.com/manuelsantiengineering/ReactiveManuelPPMTool"
               className="nav-link"
             >
               <Octicon icon={MarkGithub} size="medium" verticalAlign="middle" />{" "}
