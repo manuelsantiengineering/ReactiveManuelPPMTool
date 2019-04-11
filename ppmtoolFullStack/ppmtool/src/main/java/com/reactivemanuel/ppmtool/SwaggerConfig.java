@@ -74,33 +74,6 @@ public class SwaggerConfig {
 	
 	public static final String AUTHORIZATION_HEADER 	= "Authorization";
     public static final String DEFAULT_INCLUDE_PATTERN 	= "/api/.*";
-
-//    @Autowired
-//    private TypeResolver typeResolver;
-        
-//    @Bean
-//    public Docket api() {
-//      return new Docket(DocumentationType.SWAGGER_2)
-//          .select()
-//          .apis(RequestHandlerSelectors.basePackage("com.reactivemanuel.ppmtool.web"))
-//          .paths(regex(DEFAULT_INCLUDE_PATTERN))
-//          .build()
-//          .pathMapping("/")
-//          .directModelSubstitute(java.time.LocalDate.class, java.sql.Date.class)
-//		  .directModelSubstitute(java.time.ZonedDateTime.class, Date.class)
-//		  .directModelSubstitute(java.time.LocalDateTime.class, Date.class)	
-//          .genericModelSubstitutes(ResponseEntity.class)
-//          .useDefaultResponseMessages(false)
-//		  .globalResponseMessage(RequestMethod.GET,defaultGetResponses())
-//		  .globalResponseMessage(RequestMethod.POST,defaultPostResponses())
-//		  .globalResponseMessage(RequestMethod.DELETE,defaultGetResponses())
-//		  .globalResponseMessage(RequestMethod.PATCH,defaultGetResponses())
-//          .securitySchemes(Lists.newArrayList(apiKey()))
-//          .securityContexts(Lists.newArrayList(securityContext()))
-//          .enableUrlTemplating(true)
-//          .apiInfo(apiInfo()); 
-//    }
-    
     
 	@Bean
     public Docket api() { 
